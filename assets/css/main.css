@@ -447,6 +447,12 @@ cm-banner-left{
 		padding-bottom:2.5rem;
 	}
 
+	.cm-translator {
+		display: flex;
+		align-items: center;
+		font-size: 0.8rem;
+	}
+
 	.cm-banner-hed {
 		font-size: 2.3125rem;
 		line-height: 3rem;
