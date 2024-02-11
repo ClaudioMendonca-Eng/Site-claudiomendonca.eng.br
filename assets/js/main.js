@@ -35,7 +35,7 @@ function translatorPage() {
 		textTranslator.innerHTML = '&lt;HTML Lang="PT-BR"&gt;';
 		textBanner.innerHTML = 'I’m a soft­ware devel­op­er, turning your brainstorming into reality.';
 		textPhraseResume.innerHTML = 'Dedicated to improving your business operations';
-		textResume.innerHTML = 'Turning your brainstorming into reality, my commitment is to dedicate expertise and dedication to the creation of superior-quality software, boosting the performance and efficiency of your business. Specialized in meeting the needs of both small and large enterprises, I am here to bring innovative ideas to fruition and elevate the technological standard of your company.';
+		textResume.innerHTML = 'Turning your brainstorming into reality, my commitment is to apply expertise to create a superior-quality software, boosting the performance and efficiency of your business. Specialized in find out the needs of both small and large enterprises, I am here to bring innovative ideas to achieve and improve  the technological standard of your company.';
 		textDownload.innerHTML = 'Download Resume  <i class="ri-download-line"></i>';
 		textProjects.innerHTML = '<span>projects</span>Check out a few of my recent project.';
 		textProject01.innerHTML = '<h3Text decoder</h3><span>Text decoder application.</span>';
@@ -44,7 +44,7 @@ function translatorPage() {
 		textTestimonials.innerHTML = 'Testimonials';
 		textArticle01.innerHTML = '<article>Claudio is an excellent professional, having delivered a highly praised performance during the time I worked at Parex, and I had the opportunity to observe his day-to-day activities. Based on that experience, it is with pleasure that I provide this recommendation.</article><section><span class="cm-name">Paulo Cesar</span><span class="cm-post">MANAGING PARTNER - PVP COMERCIO E REPRESENTAÇÕES EIRELI</span></section>';
 		textArticle02.innerHTML = '<article>Waiting for More.</article><section><span class="cm-name">Nome Sobrenome</span><span class="cm-post">Função - Empresa</span></section>';
-		textVacant.innerHTML = 'I’m available for work';
+		textVacant.innerHTML = 'I am available for working';
 		textFooter.innerHTML = '<span class="cm-copyright">© 2024 All right reserved. <br><a href="https://www.claudiomendonca.eng.br/" target="_blanck">Created by Claudio Mendonça.</span>';
 	}
 
