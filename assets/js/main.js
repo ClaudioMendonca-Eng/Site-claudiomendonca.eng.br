@@ -10,6 +10,7 @@ const textProject03 = document.getElementById('project03');
 const textTestimonials = document.getElementById('testimonials');
 const textArticle01 = document.getElementById('article01');
 const textArticle02 = document.getElementById('article02');
+const textArticle03 = document.getElementById('article03');
 const textVacant = document.getElementById('vacant');
 const textFooter = document.getElementById('footer');
 
