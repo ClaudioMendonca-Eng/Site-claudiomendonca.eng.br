@@ -285,7 +285,8 @@ cm-banner-left{
 
 .cm-projects-loop figure{ 
 	margin-right: 60px; 
-	position: relative; 
+	position: relative;
+	margin-bottom: 2rem;
 }
 
 .cm-projects-loop:hover figure img.cm-image-shadow{
@@ -314,18 +315,74 @@ cm-banner-left{
 }
 
 .cm-projects-loop section{ 
-	margin-top: 5.875rem 
+	margin-top: 2.5rem 
 }
 
 .cm-projects-loop section h3{
 	font-family: 'Poppins', sans-serif; 
 	font-weight: 700; 
-	font-size: 1.25rem
+	font-size: 1.25rem;
+	margin-bottom: 0.75rem;
 }
 
 .cm-projects-loop section span{ 
 	font-size: 1rem; 
-	font-weight: 400 
+	font-weight: 400;
+	display: block;
+	line-height: 1.6;
+}
+
+.cm-projects-slider {
+	position: relative;
+	padding-bottom: 60px;
+	margin-top: 5rem;
+}
+
+.cm-projects-slider .slick-slide {
+	padding: 0 15px;
+}
+
+.cm-projects-slider .slick-list {
+	margin: 0 -15px;
+}
+
+.cm-projects-slider .slick-dots {
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	display: flex !important;
+	justify-content: center;
+	align-items: center;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.cm-projects-slider .slick-dots li {
+	margin: 0 8px;
+}
+
+.cm-projects-slider .slick-dots li button {
+	font-size: 0;
+	width: 12px;
+	height: 12px;
+	padding: 0;
+	border: 2px solid #575757;
+	border-radius: 50%;
+	background-color: transparent;
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+.cm-projects-slider .slick-dots li button:hover {
+	border-color: #0077ff;
+	background-color: #0077ff;
+}
+
+.cm-projects-slider .slick-dots li.slick-active button {
+	background-color: #0077ff;
+	border-color: #0077ff;
 }
 
 /*-----------------------------------------------------------------

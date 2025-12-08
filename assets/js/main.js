@@ -65,6 +65,36 @@ jQuery(document).ready(function($) {
 		  	nextArrow:"<button type='button' class='slick-next slick-arrow'><i class='ri-arrow-right-line'></i></button>"
 		});
     }
+
+   if ($('.cm-projects-section').length) {
+		$('.cm-projects-slider').slick({
+		  	infinite: true,
+		  	arrows: false,
+		  	dots: true,
+		  	autoplay: true,
+		  	autoplaySpeed: 3000,
+		  	slidesToShow: 3,
+		  	slidesToScroll: 1,
+		  	pauseOnHover: true,
+		  	pauseOnFocus: true,
+		  	responsive: [
+			    {
+			      breakpoint: 992,
+			      settings: {
+			        slidesToShow: 2,
+			        slidesToScroll: 1
+			      }
+			    },
+			    {
+			      breakpoint: 768,
+			      settings: {
+			        slidesToShow: 1,
+			        slidesToScroll: 1
+			      }
+			    }
+			]
+		});
+    }
    
 
 });
