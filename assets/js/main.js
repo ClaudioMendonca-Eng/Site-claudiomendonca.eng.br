@@ -10,6 +10,7 @@ const textProject03 = document.getElementById('project03');
 const textProject04 = document.getElementById('project04');
 const textProject05 = document.getElementById('project05');
 const textProject06 = document.getElementById('project06');
+const textProject07 = document.getElementById('project07');
 const textTestimonials = document.getElementById('testimonials');
 const textArticle01 = document.getElementById('article01');
 const textArticle02 = document.getElementById('article02');
@@ -32,6 +33,7 @@ function translatorPage() {
 		textProject04.innerHTML = '<h3>Relatório de Pentest - Desafio Final CTF</h3><span>Teste de penetração completo em aplicação web, capturando 17 flags em vulnerabilidades críticas: SQL Injection, XSS, falhas de acesso e exposição de credenciais.</span>';
 		textProject05.innerHTML = '<h3>Formação em Cybersecurity - Módulo 2</h3><span>Laboratório prático de implementação de Web Application Firewall (WAF) ModSecurity em ambiente containerizado Docker, demonstrando proteção contra ataques SQL Injection e XSS em aplicação DVWA.</span>';
 		textProject06.innerHTML = '<h3>Formação em Cybersecurity - Módulo 1</h3><span>Simulação de rede corporativa segmentada utilizando Docker, representando uma empresa fictícia com diferentes sub-redes, estações de trabalho, servidores e dispositivos pessoais.</span>';
+		textProject07.innerHTML = '<h3>Argos SCADA</h3><span>Sistema robusto e flexível para Supervisão e Aquisição de Dados (SCADA), com monitoramento em tempo real, interfaces HMI personalizáveis e suporte a múltiplos protocolos de comunicação industrial.</span>';
 		textTestimonials.innerHTML = 'Depoimentos';
 		textArticle01.innerHTML = '<div class="cm-testimonials-loop" id="article01"><article>O Claudio é um excelente profissional, tendo executado uma performance bastante elogiada, durante o tempo em que eu trabalhava na Parex , e pude acompanhá-lo no seu dia dia . Baseado nesse tempo é com satisfação que eu faço essa recomendação.</article><section><span class="cm-name">Paulo Cesar</span><span class="cm-post">SÓCIO-GERENTE - PVP COMERCIO E REPRESENTAÇÕES EIRELI</span></section></div>';
 		textArticle02.innerHTML = '<div class="cm-testimonials-loop" id="article02"><article>Claudio profissional exemplar compromisso com o resultado, bom trabalho em equipe com uma forte sinergia e fortes conhecimentos na área de TI, Excel, AutoCAD entre outros. Super indico muito bom profissional.</article><section><span class="cm-name">Rogerio Martins</span><span class="cm-post">Gestor de manutenção | Supervisor manutenção - Sika</span></section></div>';
@@ -52,6 +54,7 @@ function translatorPage() {
 		textProject04.innerHTML = '<h3>Pentest Report - CTF Final Challenge</h3><span>Complete penetration testing on web application, capturing 17 flags in critical vulnerabilities: SQL Injection, XSS, access control flaws and credential exposure.</span>';
 		textProject05.innerHTML = '<h3>Cybersecurity Training - Module 2</h3><span>Practical lab implementing Web Application Firewall (WAF) ModSecurity in Docker containerized environment, demonstrating protection against SQL Injection and XSS attacks on DVWA application.</span>';
 		textProject06.innerHTML = '<h3>Cybersecurity Training - Module 1</h3><span>Simulation of segmented corporate network using Docker, representing a fictitious company with different subnets, workstations, servers and personal devices.</span>';
+		textProject07.innerHTML = '<h3>Argos SCADA</h3><span>A robust and flexible system for Supervisory Control and Data Acquisition (SCADA), featuring real-time monitoring, customizable HMI interfaces, and support for multiple industrial communication protocols.</span>';
 		textTestimonials.innerHTML = 'Testimonials';
 		textArticle01.innerHTML = '<div class="cm-testimonials-loop" id="article01"><article>Claudio is an excellent professional, having delivered a highly praised performance during the time I worked at Parex, and I had the opportunity to observe his day-to-day activities. Based on that experience, it is with pleasure that I provide this recommendation.</article><section><span class="cm-name">Paulo Cesar</span><span class="cm-post">MANAGING PARTNER - PVP COMERCIO E REPRESENTAÇÕES EIRELI</span></section></div>';
 		textArticle02.innerHTML = '<div class="cm-testimonials-loop" id="article02"><article>Claudio is an exemplary professional committed to results, good teamwork skills with strong synergy, and deep knowledge in the IT field, Excel, AutoCAD among others. Highly recommend, very skilled professional.</article><section><span class="cm-name">Rogerio Martins</span><span class="cm-post">Gestor de manutenção | Supervisor manutenção - Sika</span></section></div>';
