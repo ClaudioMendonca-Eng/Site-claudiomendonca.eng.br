@@ -201,7 +201,131 @@
 			.fromTo('.cm-hero__photo img', { scale: 1.25 }, { scale: 1, duration: 1.8 }, 0.25)
 			.fromTo(['.cm-header', '.cm-hero__bottom'], { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 1, stagger: 0.1 }, 0.7);
 		root.classList.remove('js-anim');
+		if (window.matchMedia(desktopQuery).matches) {
+			swarm(['.cm-hero__photo', '.cm-hero__line--1', '.cm-hero__line--2'], document.querySelector('.cm-hero'), 7, 0.15);
+		}
 	}
+
+	/* ------------------------------------------------------------------
+	   Cursores "multiplayer" que montam o site enquanto a página desce
+	   (só no desktop; desligado com prefers-reduced-motion)
+	------------------------------------------------------------------ */
+	var CURSOR_COLORS = ['#c6f432', '#5ee7ff', '#ff5c8a', '#a78bfa', '#ededf0'];
+	var CURSOR_LABELS = ['Java', 'Spring', 'Docker', 'SQL', 'API', 'Git', 'JS', 'WAF'];
+	var cursorCount = 0;
+	var cursorsOn = true; // desligado depois da troca de idioma, para não repetir a montagem
+	var rand = gsap.utils.random;
+
+	function cursorLayer(container) {
+		var layer = container.querySelector(':scope > .cm-cursor-layer');
+		if (!layer) {
+			layer = document.createElement('div');
+			layer.className = 'cm-cursor-layer';
+			layer.setAttribute('aria-hidden', 'true');
+			container.appendChild(layer);
+		}
+		return layer;
+	}
+
+	function makeCursor(layer) {
+		var i = cursorCount++;
+		var c = document.createElement('div');
+		c.className = 'cm-cursor';
+		c.style.setProperty('--c', CURSOR_COLORS[i % CURSOR_COLORS.length]);
+		c.innerHTML = '<svg viewBox="0 0 24 24"><path d="M4 2.5l15.5 7.2-6.6 1.9-2.4 6.8z"/></svg>' +
+			(i % 2 === 0 ? '<span>' + CURSOR_LABELS[(i / 2 | 0) % CURSOR_LABELS.length] + '</span>' : '');
+		layer.appendChild(c);
+		return c;
+	}
+
+	// Caixa do elemento relativa ao container, descontando o x/y que o GSAP aplicou
+	function relBox(el, container) {
+		var r = el.getBoundingClientRect();
+		var s = container.getBoundingClientRect();
+		return {
+			left: r.left - s.left - (gsap.getProperty(el, 'x') || 0),
+			top: r.top - s.top - (gsap.getProperty(el, 'y') || 0),
+			w: r.width,
+			h: r.height
+		};
+	}
+
+	// Vários cursores voam até o(s) alvo(s), "trabalham" um pouco, clicam e vão embora
+	function swarm(targets, container, count, delay) {
+		if (!cursorsOn) return null;
+		var layer = cursorLayer(container);
+		var list = gsap.utils.toArray(targets);
+		var cursors = [];
+		var tl = gsap.timeline({
+			delay: delay || 0,
+			onComplete: function () { cursors.forEach(function (c) { c.remove(); }); }
+		});
+		for (var i = 0; i < count; i++) {
+			var b = relBox(list[i % list.length], container);
+			var c = makeCursor(layer);
+			var px = b.left + b.w * rand(0.1, 0.9);
+			var py = b.top + b.h * rand(0.15, 0.85);
+			var ang = Math.random() * Math.PI * 2;
+			var dist = rand(350, 650);
+			cursors.push(c);
+			tl.add(gsap.timeline()
+				.fromTo(c, { x: px + Math.cos(ang) * dist, y: py + Math.sin(ang) * dist, opacity: 0 },
+					{ x: px, y: py, opacity: 1, duration: 0.9, ease: 'power3.out' })
+				.to(c, { x: '+=' + rand(-40, 40), y: '+=' + rand(-24, 24), duration: 0.45, ease: 'sine.inOut', yoyo: true, repeat: 1 })
+				.to(c, { scale: 0.8, duration: 0.09, yoyo: true, repeat: 1 })
+				.to(c, { x: px + Math.cos(ang + 1.2) * dist, y: py + Math.sin(ang + 1.2) * dist, opacity: 0, duration: 0.8, ease: 'power2.in' }, '+=0.1'),
+			i * 0.09);
+		}
+		return tl;
+	}
+
+	// Cada cursor "pega" um elemento solto, arrasta até o lugar certo e solta (montando a seção)
+	function assemble(ctx, targets, container, triggerEl) {
+		if (!cursorsOn) return;
+		var els = gsap.utils.toArray(targets);
+		var offsets = els.map(function () { return { x: rand(-160, 160), y: rand(70, 150) }; });
+		els.forEach(function (el, i) {
+			gsap.set(el, { x: offsets[i].x, y: offsets[i].y, opacity: 0 });
+		});
+		ScrollTrigger.create({
+			trigger: triggerEl || els[0],
+			start: 'top 80%',
+			once: true,
+			onEnter: function () {
+				ctx.add(function () {
+					var layer = cursorLayer(container);
+					var cursors = [];
+					var master = gsap.timeline({
+						onComplete: function () { cursors.forEach(function (c) { c.remove(); }); }
+					});
+					els.forEach(function (el, i) {
+						var o = offsets[i];
+						var b = relBox(el, container);
+						var c = makeCursor(layer);
+						var px = b.left + o.x + b.w * rand(0.2, 0.7);
+						var py = b.top + o.y + rand(10, Math.min(48, b.h * 0.4));
+						var side = i % 2 ? 1 : -1;
+						cursors.push(c);
+						master.add(gsap.timeline()
+							.fromTo(c, { x: px + side * rand(250, 450), y: py + rand(150, 300), opacity: 0 },
+								{ x: px, y: py, opacity: 1, duration: 0.75, ease: 'power3.out' })
+							.to(c, { scale: 0.8, duration: 0.09, yoyo: true, repeat: 1 })
+							.to(el, { opacity: 1, duration: 0.2 }, '<')
+							.to(el, { x: 0, y: 0, duration: 0.85, ease: 'power3.inOut' })
+							.to(c, { x: px - o.x, y: py - o.y, duration: 0.85, ease: 'power3.inOut' }, '<')
+							.to(c, { x: '+=' + rand(-180, 180), y: '-=' + rand(60, 160), opacity: 0, duration: 0.6, ease: 'power2.in' }, '+=0.15'),
+						i * 0.18);
+					});
+				});
+			}
+		});
+	}
+
+	function removeCursorLayers() {
+		document.querySelectorAll('.cm-cursor-layer').forEach(function (l) { l.remove(); });
+	}
+
+	var desktopQuery = '(min-width: 992px) and (min-height: 620px)';
 
 	var mm;
 
@@ -209,7 +333,7 @@
 		mm = gsap.matchMedia();
 
 		mm.add({
-			desktop: '(min-width: 992px) and (min-height: 620px)',
+			desktop: desktopQuery,
 			mobile: '(max-width: 991px), (max-height: 619px)'
 		}, function (ctx) {
 			var desktop = ctx.conditions.desktop;
@@ -267,10 +391,19 @@
 					scrollTrigger: { trigger: '.cm-stats', start: 'top 85%', once: true }
 				});
 			});
-			gsap.from('.cm-stats li', {
-				y: 40, opacity: 0, duration: 1, ease: 'expo.out', stagger: 0.12,
-				scrollTrigger: { trigger: '.cm-stats', start: 'top 85%', once: true }
-			});
+			if (desktop) {
+				// cursores montam o "Sobre" e arrastam os números para o lugar
+				ScrollTrigger.create({
+					trigger: '.cm-about__grid', start: 'top 70%', once: true,
+					onEnter: function () { ctx.add(function () { swarm(['.cm-about__head .cm-title', '.cm-about__head .cm-btn'], document.querySelector('.cm-about__grid'), 4); }); }
+				});
+				assemble(ctx, '.cm-stats li', document.querySelector('.cm-about'), '.cm-stats');
+			} else {
+				gsap.from('.cm-stats li', {
+					y: 40, opacity: 0, duration: 1, ease: 'expo.out', stagger: 0.12,
+					scrollTrigger: { trigger: '.cm-stats', start: 'top 85%', once: true }
+				});
+			}
 
 			/* Projetos */
 			var section = document.querySelector('.cm-projects');
@@ -302,6 +435,15 @@
 					if (img) {
 						gsap.fromTo(img, { scale: 1.35 }, { scale: 1, ease: 'none', scrollTrigger: trig });
 					}
+					// dois cursores "ajustam" cada card quando ele chega; os cards que já
+					// aparecem no início disparam quando a seção entra na tela
+					var startsVisible = card.getBoundingClientRect().left < window.innerWidth * 0.7;
+					ScrollTrigger.create(Object.assign(
+						startsVisible
+							? { trigger: section, start: 'top 40%' }
+							: { trigger: card, containerAnimation: horizontal, start: 'left 70%' },
+						{ once: true, onEnter: function () { ctx.add(function () { swarm(card, track, 2); }); } }
+					));
 				});
 			} else {
 				cards.forEach(function (card) {
@@ -320,19 +462,30 @@
 			}
 
 			/* Depoimentos */
-			gsap.from('.cm-quote', {
-				y: 80, opacity: 0, duration: 1.1, ease: 'expo.out', stagger: 0.15,
-				scrollTrigger: { trigger: '.cm-quotes', start: 'top 85%', once: true }
-			});
+			if (desktop) {
+				assemble(ctx, '.cm-quote', document.querySelector('.cm-testimonials'), '.cm-quotes');
+			} else {
+				gsap.from('.cm-quote', {
+					y: 80, opacity: 0, duration: 1.1, ease: 'expo.out', stagger: 0.15,
+					scrollTrigger: { trigger: '.cm-quotes', start: 'top 85%', once: true }
+				});
+			}
 
 			/* Contato */
 			gsap.from(['.cm-contact__text', '.cm-contact__mail', '.cm-contact .cm-social li'], {
 				y: 30, opacity: 0, duration: 0.9, ease: 'expo.out', stagger: 0.06,
 				scrollTrigger: { trigger: '.cm-contact__title', start: 'top 75%', once: true }
 			});
+			if (desktop) {
+				ScrollTrigger.create({
+					trigger: '.cm-contact__title', start: 'top 70%', once: true,
+					onEnter: function () { ctx.add(function () { swarm(['.cm-contact__title', '.cm-contact__mail'], document.querySelector('.cm-contact'), 8, 0.2); }); }
+				});
+			}
 
 			return function () {
 				section.classList.remove('cm-h-scroll');
+				removeCursorLayers();
 			};
 		});
 	}
@@ -340,6 +493,7 @@
 	// Ao trocar o idioma, o texto muda de tamanho: refaz as divisões em palavras e os gatilhos
 	function rebuildAnimations() {
 		if (!mm) return;
+		cursorsOn = false;
 		mm.revert();
 		setupAnimations();
 		ScrollTrigger.refresh();

@@ -666,6 +666,32 @@ html[lang="pt-BR"] .cm-lang [data-lang="pt"] { background: var(--accent); color:
 .cm-footer__links { display: flex; gap: 1.5rem; }
 .cm-footer a:hover { color: var(--accent); }
 
+/* ---------- Cursores "multiplayer" que montam o site (criados pelo JS) ---------- */
+.cm-testimonials { position: relative; }
+.cm-about__grid { position: relative; }
+.cm-projects__track { position: relative; }
+.cm-cursor-layer { position: absolute; inset: 0; pointer-events: none; z-index: 8; overflow: visible; }
+.cm-cursor {
+	position: absolute;
+	left: 0;
+	top: 0;
+	display: flex;
+	align-items: flex-start;
+	transform-origin: 0 0;
+	will-change: transform;
+	filter: drop-shadow(0 6px 12px rgba(0, 0, 0, .55));
+}
+.cm-cursor svg { width: 30px; height: 30px; fill: var(--c); stroke: #0a0a0b; stroke-width: 1.4; stroke-linejoin: round; }
+.cm-cursor span {
+	margin: 22px 0 0 -6px;
+	padding: 2px 7px;
+	border-radius: 6px;
+	background: var(--c);
+	color: #0a0a0b;
+	font: 500 .76rem/1.4 var(--font-mono);
+	white-space: nowrap;
+}
+
 /* ---------- 10. Animações: estados iniciais e movimento reduzido ---------- */
 /* Só valem enquanto .js-anim estiver no <html> (adicionada no <head> e confirmada no main.js). */
 .js-anim .cm-hero__line .cm-line-inner { transform: translateY(110%); }
