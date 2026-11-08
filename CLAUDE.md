@@ -7,62 +7,50 @@ Guia para o Claude (e para qualquer pessoa) trabalhar neste repositório.
 Site pessoal / portfólio de Claudio Mendonça, publicado em **https://claudiomendonca.eng.br** (domínio definido no arquivo `CNAME`, hospedagem estática via GitHub Pages).
 
 - Sempre responder e documentar em **português do Brasil**.
-- Site 100% estático: **HTML + CSS + JavaScript puro**, sem Node, sem bundler e sem etapa de build.
+- Site 100% estático: **HTML + CSS + JavaScript puro**, sem Node, sem bundler e sem etapa de build. Bibliotecas só via CDN.
 - Para testar localmente basta abrir `index.html` no navegador ou servir a pasta (ex.: `python3 -m http.server`).
 
 ## Estrutura
 
 ```
-index.html          Página única do site (todas as seções)
-assets/css/main.css Estilos próprios (prefixo de classes `cm-`)
-assets/js/main.js   Tradução PT/EN + inicialização dos carrosséis (Slick)
-assets/images/      Imagens dos projetos, banner e currículo em PDF
-old/                Versão antiga do site (legado, não editar sem pedido)
+index.html          Página única do site (versão 2, redesign de 2026)
+assets/css/main.css Estilos próprios (prefixo de classes `cm-`, variáveis em `:root`)
+assets/js/main.js   Tradução PT/EN + animações de scroll (GSAP, ScrollTrigger, Lenis)
+assets/images/      Imagens dos projetos, foto do banner e currículo em PDF (compartilhadas com a v1)
+v1/                 Versão anterior do site, congelada em 08/11/2026 (acessível em /v1/)
+old/                Versão bem antiga do site (legado, não editar sem pedido)
 CNAME               Domínio customizado do GitHub Pages
 ```
 
-Seções do `index.html`, em ordem: header/menu (`.cm-menu`), banner (`.cm-banner`), resumo (`.cm-resume-section`), projetos (`.cm-projects-section`, carrossel), depoimentos (`.cm-testimonials-section`, carrossel), contato (`.cm-email-section`) e rodapé (`.cm-footer`).
+A versão anterior também está salva na branch `legado/v1-2026-11-08`.
 
-## Bibliotecas (todas via CDN no `index.html`)
+Seções do `index.html`, em ordem: header (`.cm-header`, menu + botão de idioma), hero (`.cm-hero`), sobre (`.cm-about`, com números e faixa de tecnologias), projetos (`.cm-projects`), depoimentos (`.cm-testimonials`), contato (`.cm-contact`) e rodapé (`.cm-footer`).
 
-- Bootstrap 5.0.2 (CSS e JS)
-- jQuery 3.5.1
-- Slick Carousel 1.8.1 (projetos e depoimentos)
-- Remix Icon 2.5.0
-- Google Fonts: Poppins e DM Serif Display
-- AOS 2.3.1: **só o CSS está carregado**; o script e o `AOS.init()` não existem ainda.
+## Bibliotecas (todas via CDN no `index.html`, sem build)
 
-Observação: só o `bootstrap.bundle.min.js` (com Popper) é carregado. As tags separadas de Popper e `bootstrap.min.js` no fim do `index.html` estão comentadas ("Option 2") e não rodam.
+- GSAP 3.15 + ScrollTrigger (animações ligadas ao scroll)
+- Lenis 1.3 (rolagem suave; opcional, o site funciona sem ele)
+- Remix Icon 4.6
+- Google Fonts: Space Grotesk (títulos), Inter (texto) e JetBrains Mono (detalhes)
+
+A v2 não usa mais Bootstrap, jQuery nem Slick (continuam só na `v1/`).
 
 ## Convenções importantes
 
-- **Tradução PT/EN**: o botão `#translator` chama `translatorPage()` em `assets/js/main.js`, que troca o `innerHTML` de cada elemento por `id`. O HTML vem em inglês por padrão. Ao adicionar ou alterar qualquer texto visível, atualize **os dois idiomas** no `main.js` e mantenha o `id` correspondente no HTML.
-- Novos projetos: adicionar o card em `.cm-projects-slider` com um `id` `projectNN`, a imagem em `assets/images/projects-N.png` e os textos PT/EN no `main.js`.
-- Classes CSS próprias usam o prefixo `cm-`. Variáveis de tamanho ficam em `:root` no `main.css`.
+- **Tradução PT/EN**: todo texto visível traduzível tem `data-i18n="chave"`. O texto em **inglês fica no próprio HTML** (é lido ao carregar a página) e o texto em **português fica no objeto `PT`** em `assets/js/main.js`. Ao adicionar ou alterar texto, mexa nos dois. O idioma inicial vem do `localStorage` ou do idioma do navegador; o botão `#translator` alterna.
+- **Novos projetos**: copiar um `<article class="cm-card">` dentro de `.cm-projects__track`, imagem em `assets/images/projects-N.png` (retrato, ~375x500), chaves `pNNTitle`/`pNNDesc` no HTML (EN) e no objeto `PT`. Atualizar o número em `data-count` do primeiro contador, se quiser.
+- Classes CSS próprias usam o prefixo `cm-`.
 
-## Planos futuros
+## Animações (já aplicadas na v2)
 
-### 1. Modernizar o layout (prioridade)
+Tudo em `setupAnimations()` no `main.js`, dentro de `gsap.matchMedia()`:
 
-O Claudio quer deixar o visual mais moderno **antes** de aplicar animações. Fazer o redesenho primeiro e só depois a animação de scroll abaixo, já pensando nas seções novas.
+- Hero: título gigante entra letra por linha e sai de cena (parallax) enquanto a foto fica; no desktop a seção fica presa (pin).
+- Sobre: seção presa enquanto o parágrafo acende palavra por palavra; números com contagem.
+- Projetos: no desktop (largura >= 992px e altura >= 620px) a seção fica presa e os cards deslizam na horizontal (classe `.cm-h-scroll` adicionada pelo JS); cada card e sua imagem crescem ao entrar. No celular/tablet vira grade vertical com fade.
+- Títulos com `data-split` são revelados palavra por palavra.
+- Depoimentos e contato: entrada com fade/slide.
+- `prefers-reduced-motion` desliga tudo; sem JS ou sem CDN o conteúdo aparece normalmente (os estados iniciais dependem da classe `js-anim`, removida em até 4 s).
+- Ao trocar o idioma, `rebuildAnimations()` refaz as divisões em palavras e os gatilhos.
 
-### 2. Animação ao rolar a página (aguardando o novo layout)
-
-Referência: vídeo de um portfólio com hero de título gigante e efeitos acompanhando o scroll. **Não aplicar até o Claudio pedir.**
-
-Efeitos desejados:
-- Hero com título enorme que sai de cena (parallax) enquanto a foto permanece.
-- Seções "presas" (pin) na tela enquanto o conteúdo entra.
-- Projetos deslizando na horizontal conforme a rolagem; imagem que cresce ao entrar.
-- Títulos revelados palavra por palavra e números com contagem.
-
-Como implementar (mantendo o site sem build, tudo via CDN):
-- **GSAP + ScrollTrigger** (gratuitos) para pin, scroll horizontal e animações ligadas ao scroll.
-- **Lenis** (opcional) para rolagem suave.
-- Para efeitos simples de fade/slide, dá para usar o AOS que já está no `<head>`: adicionar o script e chamar `AOS.init()`.
-- Respeitar `prefers-reduced-motion` e testar no celular (desativar pin/scroll horizontal em telas pequenas, se pesar).
-- Se a seção de projetos virar scroll horizontal com GSAP, o carrossel Slick dela deve ser removido para não conflitar.
-
-Esforço estimado:
-- Básico (AOS, fade/slide nas seções): 1 a 2 horas.
-- Parecido com o vídeo (hero parallax, projetos em scroll horizontal, textos revelados): 1 a 3 dias, incluindo responsividade e desempenho.
+Para testar localmente: `python3 -m http.server` e abrir `http://localhost:8000`.
