@@ -1,113 +1,355 @@
-const textTranslator = document.getElementById('translator');
-const textBanner = document.getElementById('banner');
-const textPhraseResume = document.getElementById('phraseresume');
-const textResume = document.getElementById('resume');
-const textDownload = document.getElementById('download');
-const textProjects = document.getElementById('projects');
-const textProject01 = document.getElementById('project01');
-const textProject02 = document.getElementById('project02');
-const textProject03 = document.getElementById('project03');
-const textProject04 = document.getElementById('project04');
-const textProject05 = document.getElementById('project05');
-const textProject06 = document.getElementById('project06');
-const textProject07 = document.getElementById('project07');
-const textTestimonials = document.getElementById('testimonials');
-const textArticle01 = document.getElementById('article01');
-const textArticle02 = document.getElementById('article02');
-const textArticle03 = document.getElementById('article03');
-const textVacant = document.getElementById('vacant');
-const textFooter = document.getElementById('footer');
+/*
+  Claudio Mendonça · Portfólio v2
+  1. Tradução PT/EN
+  2. Header, barra de progresso e menu ativo
+  3. Animações (GSAP + ScrollTrigger + Lenis)
 
+  Tradução: o texto em INGLÊS fica no próprio index.html (é lido na carga da página).
+  O texto em PORTUGUÊS fica no objeto PT abaixo. Todo elemento traduzível tem
+  data-i18n="chave" no HTML e a mesma chave aqui.
+*/
+(function () {
+	'use strict';
 
-function translatorPage() {
-	if (textTranslator.innerHTML === '&lt;HTML Lang="PT-BR"&gt;') {
-		textTranslator.innerHTML = '&lt;HTML Lang="EN"&gt;';
-		textBanner.innerHTML = 'Sou desenvolvedor de software, transformando seu brainstorming em realidade digital.';
-		textPhraseResume.innerHTML = 'Dedicado a melhorar suas operações comerciais';
-		textResume.innerHTML = 'Transformando o seu brainstorming em realidade, meu compromisso é dedicar expertise e dedicação à criação de softwares de qualidade superior, potencializando o desempenho e a eficiência do seu negócio. Especializado em atender às necessidades de pequenas e grandes empresas, estou aqui para concretizar ideias inovadoras e elevar o padrão tecnológico da sua empresa.';
-		textDownload.innerHTML = 'Download do Resumo  <i class="ri-download-line"></i>';
-		textProjects.innerHTML = '<span>projetos</span>Confira alguns dos meus projetos recentes.';
-		textProject01.innerHTML = '<h3>Decodificador de texto</h3><span>Aplicativo decodificador de textos.</span>';
-		textProject02.innerHTML = '<h3>Jogo de Adivinhação</h3><span>Jogo do número secreto.</span>';
-		textProject03.innerHTML = '<h3>Santander Dev Week 2024</h3><span>Um Chat Inteligente com os Campeões de League of Legends usando APIs, Java, Spring Boot e IA.</span>';
-		textProject04.innerHTML = '<h3>Relatório de Pentest - Desafio Final CTF</h3><span>Teste de penetração completo em aplicação web, capturando 17 flags em vulnerabilidades críticas: SQL Injection, XSS, falhas de acesso e exposição de credenciais.</span>';
-		textProject05.innerHTML = '<h3>Formação em Cybersecurity - Módulo 2</h3><span>Laboratório prático de implementação de Web Application Firewall (WAF) ModSecurity em ambiente containerizado Docker, demonstrando proteção contra ataques SQL Injection e XSS em aplicação DVWA.</span>';
-		textProject06.innerHTML = '<h3>Formação em Cybersecurity - Módulo 1</h3><span>Simulação de rede corporativa segmentada utilizando Docker, representando uma empresa fictícia com diferentes sub-redes, estações de trabalho, servidores e dispositivos pessoais.</span>';
-		textProject07.innerHTML = '<h3>Argos SCADA</h3><span>Sistema robusto e flexível para Supervisão e Aquisição de Dados (SCADA), com monitoramento em tempo real, interfaces HMI personalizáveis e suporte a múltiplos protocolos de comunicação industrial.</span>';
-		textTestimonials.innerHTML = 'Depoimentos';
-		textArticle01.innerHTML = '<div class="cm-testimonials-loop" id="article01"><article>O Claudio é um excelente profissional, tendo executado uma performance bastante elogiada, durante o tempo em que eu trabalhava na Parex , e pude acompanhá-lo no seu dia dia . Baseado nesse tempo é com satisfação que eu faço essa recomendação.</article><section><span class="cm-name">Paulo Cesar</span><span class="cm-post">SÓCIO-GERENTE - PVP COMERCIO E REPRESENTAÇÕES EIRELI</span></section></div>';
-		textArticle02.innerHTML = '<div class="cm-testimonials-loop" id="article02"><article>Claudio profissional exemplar compromisso com o resultado, bom trabalho em equipe com uma forte sinergia e fortes conhecimentos na área de TI, Excel, AutoCAD entre outros. Super indico muito bom profissional.</article><section><span class="cm-name">Rogerio Martins</span><span class="cm-post">Gestor de manutenção | Supervisor manutenção - Sika</span></section></div>';
-		textArticle03.innerHTML = '<div class="cm-testimonials-loop" id="article03"><article>Claudio é muito bom profissional. Esse parceiro recomendo, pois confio em suas competências para dar soluções coerentes as demandas difíceis! Claudio tem meu total apoio.</article><section><span class="cm-name">Humberto Santana</span><span class="cm-post">Fundador - Engenheiro Consultor Ltda</span></section></div>';
-		textVacant.innerHTML = 'Estou disponível para prestação de serviços';
-		textFooter.innerHTML = '<span class="cm-copyright">© 2024 Todos os direitos reservados. <br><a href="https://www.claudiomendonca.eng.br/" target="_blanck">Criado por Claudio Mendonça.</span>';
+	/* ------------------------------------------------------------------
+	   1. Tradução PT/EN
+	------------------------------------------------------------------ */
+	var PT = {
+		pageTitle: 'Claudio Mendonça · Engenheiro de Software',
+		skip: 'Pular para o conteúdo',
+		navAbout: 'Sobre',
+		navProjects: 'Projetos',
+		navTestimonials: 'Depoimentos',
+		navContact: 'Contato',
+		role: 'Engenheiro de Software · Back-end &amp; Cibersegurança',
+		banner: 'Sou desenvolvedor de software, transformando seu brainstorming em realidade digital.',
+		scroll: 'Role',
+
+		labelAbout: 'Sobre',
+		phraseresume: 'Dedicado a melhorar suas operações comerciais',
+		download: 'Baixar currículo',
+		resume: 'Transformando o seu brainstorming em realidade, meu compromisso é dedicar expertise e dedicação à criação de softwares de qualidade superior, potencializando o desempenho e a eficiência do seu negócio. Especializado em atender às necessidades de pequenas e grandes empresas, estou aqui para concretizar ideias inovadoras e elevar o padrão tecnológico da sua empresa.',
+		stat1: 'Projetos em destaque',
+		stat2: 'Flags capturadas em CTF',
+		stat3: 'Recomendações profissionais',
+
+		labelProjects: 'Projetos',
+		projects: 'Confira alguns dos meus projetos recentes.',
+		projectsHint: 'Continue rolando para explorar',
+		viewProject: 'Ver projeto',
+		moreProjects: 'Ver todos os projetos no GitHub',
+		p04Title: 'Relatório de Pentest - Desafio Final CTF',
+		p04Desc: 'Teste de penetração completo em aplicação web, capturando 17 flags em vulnerabilidades críticas: SQL Injection, XSS, falhas de controle de acesso e exposição de credenciais.',
+		p05Title: 'Formação em Cybersecurity - Módulo 2',
+		p05Desc: 'Laboratório prático de implementação de Web Application Firewall (WAF) ModSecurity em ambiente containerizado Docker, demonstrando proteção contra ataques SQL Injection e XSS em aplicação DVWA.',
+		p06Title: 'Formação em Cybersecurity - Módulo 1',
+		p06Desc: 'Simulação de rede corporativa segmentada utilizando Docker, representando uma empresa fictícia com diferentes sub-redes, estações de trabalho, servidores e dispositivos pessoais.',
+		p03Title: 'Santander Dev Week 2024',
+		p03Desc: 'Um Chat Inteligente com os Campeões de League of Legends usando APIs, Java, Spring Boot e IA.',
+		p07Title: 'Argos SCADA',
+		p07Desc: 'Sistema robusto e flexível para Supervisão e Aquisição de Dados (SCADA), com monitoramento em tempo real, interfaces HMI personalizáveis e suporte a múltiplos protocolos de comunicação industrial.',
+		p01Title: 'Decodificador de texto',
+		p01Desc: 'Aplicativo decodificador de textos.',
+		p02Title: 'Jogo de Adivinhação',
+		p02Desc: 'Jogo do número secreto.',
+
+		labelTestimonials: 'Depoimentos',
+		testimonials: 'O que dizem sobre o meu trabalho',
+		t01Text: 'O Claudio é um excelente profissional, tendo executado uma performance bastante elogiada durante o tempo em que eu trabalhava na Parex, e pude acompanhá-lo no seu dia a dia. Baseado nesse tempo, é com satisfação que eu faço essa recomendação.',
+		t01Post: 'Sócio-gerente · PVP Comercio e Representações EIRELI',
+		t02Text: 'Claudio, profissional exemplar, compromisso com o resultado, bom trabalho em equipe com uma forte sinergia e fortes conhecimentos na área de TI, Excel, AutoCAD entre outros. Super indico, muito bom profissional.',
+		t02Post: 'Gestor de manutenção · Sika',
+		t03Text: 'Claudio é muito bom profissional. Esse parceiro eu recomendo, pois confio em suas competências para dar soluções coerentes às demandas difíceis! Claudio tem meu total apoio.',
+		t03Post: 'Fundador · Engenheiro Consultor Ltda',
+
+		labelContact: 'Contato',
+		contactTitle: 'Vamos construir algo juntos.',
+		vacant: 'Estou disponível para prestação de serviços.',
+		rights: 'Todos os direitos reservados.',
+		createdBy: 'Criado por Claudio Mendonça.',
+		oldVersion: 'Versão anterior',
+		backTop: 'Voltar ao topo'
+	};
+
+	var root = document.documentElement;
+	var i18nEls = document.querySelectorAll('[data-i18n]');
+	var EN = { pageTitle: document.title };
+	i18nEls.forEach(function (el) { EN[el.dataset.i18n] = el.innerHTML.trim(); });
+	var DICT = { en: EN, pt: PT };
+
+	function storedLang() {
+		try { return localStorage.getItem('cm-lang'); } catch (e) { return null; }
 	}
-	else {
-		textTranslator.innerHTML = '&lt;HTML Lang="PT-BR"&gt;';
-		textBanner.innerHTML = 'I’m a soft­ware devel­op­er, turning your brainstorming into reality.';
-		textPhraseResume.innerHTML = 'Dedicated to improving your business operations';
-		textResume.innerHTML = 'Turning your brainstorming into reality, my commitment is to apply expertise to create a superior-quality software, boosting the performance and efficiency of your business. Specialized in find out the needs of both small and large enterprises, I am here to bring innovative ideas to improve the technological standards of your company.';
-		textDownload.innerHTML = 'Download Resume  <i class="ri-download-line"></i>';
-		textProjects.innerHTML = '<span>projects</span>Check out a few of my recent projects.';
-		textProject01.innerHTML = '<h3>Text Decoder</h3><span>Text decoder application.</span>';
-		textProject02.innerHTML = '<h3>Guessing Game</h3><span>Secret number game.</span>';
-		textProject03.innerHTML = '<h3>Santander Dev Week 2024</h3><span>A Smart Chat with League of Legends Champions using APIs, Java, Spring Boot, and AI.</span>';
-		textProject04.innerHTML = '<h3>Pentest Report - CTF Final Challenge</h3><span>Complete penetration testing on web application, capturing 17 flags in critical vulnerabilities: SQL Injection, XSS, access control flaws and credential exposure.</span>';
-		textProject05.innerHTML = '<h3>Cybersecurity Training - Module 2</h3><span>Practical lab implementing Web Application Firewall (WAF) ModSecurity in Docker containerized environment, demonstrating protection against SQL Injection and XSS attacks on DVWA application.</span>';
-		textProject06.innerHTML = '<h3>Cybersecurity Training - Module 1</h3><span>Simulation of segmented corporate network using Docker, representing a fictitious company with different subnets, workstations, servers and personal devices.</span>';
-		textProject07.innerHTML = '<h3>Argos SCADA</h3><span>A robust and flexible system for Supervisory Control and Data Acquisition (SCADA), featuring real-time monitoring, customizable HMI interfaces, and support for multiple industrial communication protocols.</span>';
-		textTestimonials.innerHTML = 'Testimonials';
-		textArticle01.innerHTML = '<div class="cm-testimonials-loop" id="article01"><article>Claudio is an excellent professional, having delivered a highly praised performance during the time I worked at Parex, and I had the opportunity to observe his day-to-day activities. Based on that experience, it is with pleasure that I provide this recommendation.</article><section><span class="cm-name">Paulo Cesar</span><span class="cm-post">MANAGING PARTNER - PVP COMERCIO E REPRESENTAÇÕES EIRELI</span></section></div>';
-		textArticle02.innerHTML = '<div class="cm-testimonials-loop" id="article02"><article>Claudio is an exemplary professional committed to results, good teamwork skills with strong synergy, and deep knowledge in the IT field, Excel, AutoCAD among others. Highly recommend, very skilled professional.</article><section><span class="cm-name">Rogerio Martins</span><span class="cm-post">Gestor de manutenção | Supervisor manutenção - Sika</span></section></div>';
-		textArticle03.innerHTML = '<div class="cm-testimonials-loop" id="article03"><article>Claudio is a very skilled professional. I recommend this partner because I trust in his abilities to provide coherent solutions to difficult demands! Claudio has my full support.</article><section><span class="cm-name">Humberto Santana</span><span class="cm-post">Fundador - Engenheiro Consultor Ltda</span></section></div>';
-		textVacant.innerHTML = 'I am available to work';
-		textFooter.innerHTML = '<span class="cm-copyright">© 2024 All rights reserved. <br><a href="https://www.claudiomendonca.eng.br/" target="_blanck">Created by Claudio Mendonça.</span>';
+
+	var lang = storedLang() || ((navigator.language || '').toLowerCase().indexOf('pt') === 0 ? 'pt' : 'en');
+
+	function applyLang(next) {
+		lang = next;
+		root.lang = next === 'pt' ? 'pt-BR' : 'en';
+		i18nEls.forEach(function (el) {
+			var value = DICT[next][el.dataset.i18n];
+			if (value === undefined) {
+				console.warn('[i18n] chave sem tradução:', el.dataset.i18n);
+				return;
+			}
+			el.innerHTML = value;
+		});
+		document.title = DICT[next].pageTitle;
+		try { localStorage.setItem('cm-lang', next); } catch (e) { /* modo privado */ }
 	}
 
-}
+	applyLang(lang);
 
-jQuery(document).ready(function($) {
+	document.getElementById('translator').addEventListener('click', function () {
+		applyLang(lang === 'pt' ? 'en' : 'pt');
+		rebuildAnimations();
+	});
 
-   if ($('.cm-testimonials-section').length) {
-		$('.cm-testimonials-slider').slick({
-		  	infinite: true,
-		  	arrows: true,
-		  	autoplay: true,
-		  	autoplaySpeed: 4000,
-		  	prevArrow:"<button type='button' class='slick-prev slick-arrow'><i class='ri-arrow-left-line'></i></button>",
-		  	nextArrow:"<button type='button' class='slick-next slick-arrow'><i class='ri-arrow-right-line'></i></button>"
+	document.querySelectorAll('.cm-year').forEach(function (el) { el.textContent = new Date().getFullYear(); });
+
+	/* ------------------------------------------------------------------
+	   2. Header (esconde ao descer, volta ao subir), progresso e menu ativo
+	------------------------------------------------------------------ */
+	var header = document.querySelector('.cm-header');
+	var progress = document.querySelector('.cm-progress');
+	var lastY = window.scrollY;
+
+	function onScroll() {
+		var y = window.scrollY;
+		var max = document.documentElement.scrollHeight - window.innerHeight;
+		progress.style.transform = 'scaleX(' + (max > 0 ? y / max : 0) + ')';
+		header.classList.toggle('is-scrolled', y > 40);
+		header.classList.toggle('is-hidden', y > lastY && y > 400);
+		lastY = y;
+	}
+	window.addEventListener('scroll', onScroll, { passive: true });
+	onScroll();
+
+	var navLinks = document.querySelectorAll('.cm-nav a');
+	if ('IntersectionObserver' in window) {
+		var io = new IntersectionObserver(function (entries) {
+			entries.forEach(function (entry) {
+				if (!entry.isIntersecting) return;
+				navLinks.forEach(function (a) {
+					a.classList.toggle('is-active', a.getAttribute('href') === '#' + entry.target.id);
+				});
+			});
+		}, { rootMargin: '-45% 0px -50% 0px' });
+		['about', 'projects', 'testimonials', 'contact'].forEach(function (id) {
+			var s = document.getElementById(id);
+			if (s) io.observe(s);
 		});
-    }
+	}
 
-   if ($('.cm-projects-section').length) {
-		$('.cm-projects-slider').slick({
-		  	infinite: true,
-		  	arrows: false,
-		  	dots: true,
-		  	autoplay: true,
-		  	autoplaySpeed: 3000,
-		  	slidesToShow: 3,
-		  	slidesToScroll: 1,
-		  	pauseOnHover: true,
-		  	pauseOnFocus: true,
-		  	responsive: [
-			    {
-			      breakpoint: 992,
-			      settings: {
-			        slidesToShow: 2,
-			        slidesToScroll: 1
-			      }
-			    },
-			    {
-			      breakpoint: 768,
-			      settings: {
-			        slidesToShow: 1,
-			        slidesToScroll: 1
-			      }
-			    }
-			]
+	/* ------------------------------------------------------------------
+	   3. Animações
+	------------------------------------------------------------------ */
+	var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	var hasGsap = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
+
+	if (reduceMotion || !hasGsap) {
+		root.classList.remove('js-anim');
+		return;
+	}
+
+	gsap.registerPlugin(ScrollTrigger);
+
+	// Rolagem suave (opcional: se o Lenis não carregar, o site segue com a rolagem nativa)
+	if (typeof window.Lenis !== 'undefined') {
+		var lenis = new Lenis({ lerp: 0.1, anchors: true });
+		lenis.on('scroll', ScrollTrigger.update);
+		gsap.ticker.add(function (time) { lenis.raf(time * 1000); });
+		gsap.ticker.lagSmoothing(0);
+	}
+
+	// Divide o texto de um elemento em palavras (<span class="cm-word"><span class="cm-word-inner">)
+	function splitWords(el) {
+		if (!el.querySelector('.cm-word')) {
+			(function walk(node) {
+				Array.prototype.slice.call(node.childNodes).forEach(function (child) {
+					if (child.nodeType === 3) {
+						var frag = document.createDocumentFragment();
+						child.textContent.split(/(\s+)/).forEach(function (part) {
+							if (!part) return;
+							if (/^\s+$/.test(part)) {
+								frag.appendChild(document.createTextNode(' '));
+								return;
+							}
+							var word = document.createElement('span');
+							var inner = document.createElement('span');
+							word.className = 'cm-word';
+							inner.className = 'cm-word-inner';
+							inner.textContent = part;
+							word.appendChild(inner);
+							frag.appendChild(word);
+						});
+						child.parentNode.replaceChild(frag, child);
+					} else if (child.nodeType === 1) {
+						walk(child);
+					}
+				});
+			})(el);
+		}
+		return el.querySelectorAll('.cm-word-inner');
+	}
+
+	// Entrada do hero (roda uma vez ao carregar)
+	function playIntro() {
+		var tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
+		tl.fromTo('.cm-hero__line .cm-line-inner', { yPercent: 110, y: 0 }, { yPercent: 0, y: 0, duration: 1.4, stagger: 0.12 })
+			.fromTo('.cm-hero__photo', { opacity: 0, y: 60, scale: 1 }, { opacity: 1, y: 0, duration: 1.4 }, 0.25)
+			.fromTo('.cm-hero__photo img', { scale: 1.25 }, { scale: 1, duration: 1.8 }, 0.25)
+			.fromTo(['.cm-header', '.cm-hero__bottom'], { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 1, stagger: 0.1 }, 0.7);
+		root.classList.remove('js-anim');
+	}
+
+	var mm;
+
+	function setupAnimations() {
+		mm = gsap.matchMedia();
+
+		mm.add({
+			desktop: '(min-width: 992px) and (min-height: 620px)',
+			mobile: '(max-width: 991px), (max-height: 619px)'
+		}, function (ctx) {
+			var desktop = ctx.conditions.desktop;
+
+			/* Hero: o título gigante sai de cena enquanto a foto permanece (pin no desktop) */
+			var heroTl = gsap.timeline({
+				scrollTrigger: {
+					trigger: '.cm-hero',
+					start: 'top top',
+					end: desktop ? '+=90%' : 'bottom top',
+					scrub: true,
+					pin: desktop
+				}
+			});
+			heroTl
+				.to('.cm-hero__line--1', { xPercent: -45, opacity: 0, ease: 'none' }, 0)
+				.to('.cm-hero__line--2', { xPercent: 45, opacity: 0, ease: 'none' }, 0)
+				.to('.cm-hero__photo', { scale: desktop ? 0.8 : 0.9, ease: 'none' }, 0)
+				.to('.cm-hero__glow', { scale: 1.6, opacity: 0.4, ease: 'none' }, 0)
+				.to(['.cm-hero__intro', '.cm-hero__aside'], { opacity: 0, y: -40, ease: 'none' }, 0);
+
+			/* Títulos revelados palavra por palavra */
+			document.querySelectorAll('[data-split]').forEach(function (el) {
+				gsap.from(splitWords(el), {
+					yPercent: 110,
+					duration: 1,
+					ease: 'expo.out',
+					stagger: 0.05,
+					scrollTrigger: { trigger: el, start: 'top 85%', once: true }
+				});
+			});
+
+			/* Sobre: seção presa enquanto o parágrafo acende palavra por palavra */
+			var scrubText = document.querySelector('[data-scrub]');
+			if (scrubText) {
+				gsap.fromTo(splitWords(scrubText), { opacity: 0.15 }, {
+					opacity: 1,
+					ease: 'none',
+					stagger: 0.1,
+					scrollTrigger: desktop
+						? { trigger: '.cm-about__grid', start: 'center center', end: '+=110%', pin: true, scrub: true }
+						: { trigger: scrubText, start: 'top 80%', end: 'bottom 45%', scrub: true }
+				});
+			}
+
+			/* Números com contagem */
+			document.querySelectorAll('.cm-count').forEach(function (el) {
+				var target = parseInt(el.dataset.count, 10);
+				var counter = { v: 0 };
+				gsap.to(counter, {
+					v: target,
+					duration: 1.8,
+					ease: 'power2.out',
+					onUpdate: function () { el.textContent = Math.round(counter.v); },
+					scrollTrigger: { trigger: '.cm-stats', start: 'top 85%', once: true }
+				});
+			});
+			gsap.from('.cm-stats li', {
+				y: 40, opacity: 0, duration: 1, ease: 'expo.out', stagger: 0.12,
+				scrollTrigger: { trigger: '.cm-stats', start: 'top 85%', once: true }
+			});
+
+			/* Projetos */
+			var section = document.querySelector('.cm-projects');
+			var track = document.querySelector('.cm-projects__track');
+			var cards = gsap.utils.toArray('.cm-projects .cm-card');
+
+			if (desktop) {
+				// Scroll horizontal: a seção fica presa e os cards deslizam conforme a rolagem
+				section.classList.add('cm-h-scroll');
+				var distance = function () { return track.scrollWidth - window.innerWidth; };
+				var horizontal = gsap.to(track, {
+					x: function () { return -distance(); },
+					ease: 'none',
+					scrollTrigger: {
+						trigger: section,
+						start: 'top top',
+						end: function () { return '+=' + distance(); },
+						pin: true,
+						scrub: 1,
+						invalidateOnRefresh: true,
+						anticipatePin: 1
+					}
+				});
+				// Cada card (e sua imagem) cresce ao entrar na tela
+				cards.forEach(function (card) {
+					var trig = { trigger: card, containerAnimation: horizontal, start: 'left 100%', end: 'left 55%', scrub: true };
+					gsap.fromTo(card, { scale: 0.82, opacity: 0.35 }, { scale: 1, opacity: 1, ease: 'none', scrollTrigger: trig });
+					var img = card.querySelector('img');
+					if (img) {
+						gsap.fromTo(img, { scale: 1.35 }, { scale: 1, ease: 'none', scrollTrigger: trig });
+					}
+				});
+			} else {
+				cards.forEach(function (card) {
+					gsap.from(card, {
+						y: 60, opacity: 0, duration: 1, ease: 'expo.out',
+						scrollTrigger: { trigger: card, start: 'top 88%', once: true }
+					});
+					var img = card.querySelector('img');
+					if (img) {
+						gsap.fromTo(img, { scale: 1.25 }, {
+							scale: 1, ease: 'none',
+							scrollTrigger: { trigger: card, start: 'top bottom', end: 'center center', scrub: true }
+						});
+					}
+				});
+			}
+
+			/* Depoimentos */
+			gsap.from('.cm-quote', {
+				y: 80, opacity: 0, duration: 1.1, ease: 'expo.out', stagger: 0.15,
+				scrollTrigger: { trigger: '.cm-quotes', start: 'top 85%', once: true }
+			});
+
+			/* Contato */
+			gsap.from(['.cm-contact__text', '.cm-contact__mail', '.cm-contact .cm-social li'], {
+				y: 30, opacity: 0, duration: 0.9, ease: 'expo.out', stagger: 0.06,
+				scrollTrigger: { trigger: '.cm-contact__title', start: 'top 75%', once: true }
+			});
+
+			return function () {
+				section.classList.remove('cm-h-scroll');
+			};
 		});
-    }
-   
+	}
 
-});
+	// Ao trocar o idioma, o texto muda de tamanho: refaz as divisões em palavras e os gatilhos
+	function rebuildAnimations() {
+		if (!mm) return;
+		mm.revert();
+		setupAnimations();
+		ScrollTrigger.refresh();
+	}
 
+	playIntro();
+	setupAnimations();
+
+	if (document.fonts && document.fonts.ready) {
+		document.fonts.ready.then(function () { ScrollTrigger.refresh(); });
+	}
+	window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+})();
