@@ -32,7 +32,7 @@ Seções do `index.html`, em ordem: header/menu (`.cm-menu`), banner (`.cm-banne
 - Google Fonts: Poppins e DM Serif Display
 - AOS 2.3.1: **só o CSS está carregado**; o script e o `AOS.init()` não existem ainda.
 
-Observação: o Bootstrap JS aparece carregado mais de uma vez (bundle + popper + bootstrap.min). Dá para enxugar numa limpeza futura.
+Observação: só o `bootstrap.bundle.min.js` (com Popper) é carregado. As tags separadas de Popper e `bootstrap.min.js` no fim do `index.html` estão comentadas ("Option 2") e não rodam.
 
 ## Convenções importantes
 
