@@ -283,9 +283,9 @@
 	function assemble(ctx, targets, container, triggerEl) {
 		if (!cursorsOn) return;
 		var els = gsap.utils.toArray(targets);
-		var offsets = els.map(function () { return { x: rand(-160, 160), y: rand(70, 150), r: rand(-6, 6) }; });
+		var offsets = els.map(function () { return { x: rand(-160, 160), y: rand(70, 150) }; });
 		els.forEach(function (el, i) {
-			gsap.set(el, { x: offsets[i].x, y: offsets[i].y, rotation: offsets[i].r, opacity: 0 });
+			gsap.set(el, { x: offsets[i].x, y: offsets[i].y, opacity: 0 });
 		});
 		ScrollTrigger.create({
 			trigger: triggerEl || els[0],
@@ -311,7 +311,7 @@
 								{ x: px, y: py, opacity: 1, duration: 0.75, ease: 'power3.out' })
 							.to(c, { scale: 0.8, duration: 0.09, yoyo: true, repeat: 1 })
 							.to(el, { opacity: 1, duration: 0.2 }, '<')
-							.to(el, { x: 0, y: 0, rotation: 0, duration: 0.85, ease: 'power3.inOut' })
+							.to(el, { x: 0, y: 0, duration: 0.85, ease: 'power3.inOut' })
 							.to(c, { x: px - o.x, y: py - o.y, duration: 0.85, ease: 'power3.inOut' }, '<')
 							.to(c, { x: '+=' + rand(-180, 180), y: '-=' + rand(60, 160), opacity: 0, duration: 0.6, ease: 'power2.in' }, '+=0.15'),
 						i * 0.18);
@@ -395,7 +395,7 @@
 				// cursores montam o "Sobre" e arrastam os números para o lugar
 				ScrollTrigger.create({
 					trigger: '.cm-about__grid', start: 'top 70%', once: true,
-					onEnter: function () { ctx.add(function () { swarm(['.cm-about__head .cm-title', '.cm-about__head .cm-btn'], document.querySelector('.cm-about'), 4); }); }
+					onEnter: function () { ctx.add(function () { swarm(['.cm-about__head .cm-title', '.cm-about__head .cm-btn'], document.querySelector('.cm-about__grid'), 4); }); }
 				});
 				assemble(ctx, '.cm-stats li', document.querySelector('.cm-about'), '.cm-stats');
 			} else {
@@ -435,11 +435,15 @@
 					if (img) {
 						gsap.fromTo(img, { scale: 1.35 }, { scale: 1, ease: 'none', scrollTrigger: trig });
 					}
-					// dois cursores "ajustam" cada card quando ele chega
-					ScrollTrigger.create({
-						trigger: card, containerAnimation: horizontal, start: 'left 70%', once: true,
-						onEnter: function () { ctx.add(function () { swarm(card, track, 2); }); }
-					});
+					// dois cursores "ajustam" cada card quando ele chega; os cards que já
+					// aparecem no início disparam quando a seção entra na tela
+					var startsVisible = card.getBoundingClientRect().left < window.innerWidth * 0.7;
+					ScrollTrigger.create(Object.assign(
+						startsVisible
+							? { trigger: section, start: 'top 40%' }
+							: { trigger: card, containerAnimation: horizontal, start: 'left 70%' },
+						{ once: true, onEnter: function () { ctx.add(function () { swarm(card, track, 2); }); } }
+					));
 				});
 			} else {
 				cards.forEach(function (card) {
