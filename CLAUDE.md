@@ -50,6 +50,7 @@ Tudo em `setupAnimations()` no `main.js`, dentro de `gsap.matchMedia()`:
 - Projetos: no desktop (largura >= 992px e altura >= 620px) a seção fica presa e os cards deslizam na horizontal (classe `.cm-h-scroll` adicionada pelo JS); cada card e sua imagem crescem ao entrar. No celular/tablet vira grade vertical com fade.
 - Títulos com `data-split` são revelados palavra por palavra.
 - Depoimentos e contato: entrada com fade/slide.
+- **Cursores "multiplayer"** (estilo Figma, como no vídeo de referência), só no desktop: `swarm()` faz vários cursores coloridos voarem até um elemento, "trabalharem" e saírem (hero, sobre, cada card de projeto, contato); `assemble()` faz cada cursor pegar um elemento solto e arrastá-lo até o lugar (números e depoimentos). Os cursores ficam numa `.cm-cursor-layer` criada dentro da seção e são removidos ao terminar. Depois de trocar o idioma eles não se repetem (`cursorsOn`).
 - `prefers-reduced-motion` desliga tudo; sem JS ou sem CDN o conteúdo aparece normalmente (os estados iniciais dependem da classe `js-anim`, removida em até 4 s).
 - Ao trocar o idioma, `rebuildAnimations()` refaz as divisões em palavras e os gatilhos.
 
