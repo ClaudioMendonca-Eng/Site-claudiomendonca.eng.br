@@ -76,8 +76,6 @@
 		p19Desc: 'Exercício em JavaScript que renderiza um array de objetos no HTML com map() e busca personagens dinamicamente na API do Rick and Morty.',
 		p20Title: 'Landing page a partir do Figma',
 		p20Desc: 'Landing page construída a partir de um layout no Figma com HTML5 e Sass, com foco em boas práticas e organização de arquivos, publicada na Vercel.',
-		p30Title: 'HTML e CSS - Oracle ONE',
-		p30Desc: 'Primeiros passos com HTML e CSS no programa Oracle ONE, construindo uma página de portfólio com estrutura semântica e estilização.',
 		p16Title: 'Cartão de Natal - Vai na Web',
 		p16Desc: 'Página interativa de Natal feita para o desafio da comunidade Vai na Web, com um cartão personalizado que pode ser baixado.',
 		p18Title: 'Desafio Python - Vai na Web',
