@@ -361,10 +361,22 @@ html[lang="pt-BR"] .cm-lang [data-lang="pt"] { background: var(--accent); color:
 	gap: 2rem;
 }
 .cm-hero__intro { max-width: 30rem; }
+/* no hero, o cargo é o destaque e a frase de apoio fica logo abaixo */
+.cm-hero__intro .cm-eyebrow {
+	font-family: var(--font-display);
+	font-size: clamp(1.15rem, 1.9vw, 1.6rem);
+	font-weight: 500;
+	letter-spacing: -0.01em;
+	color: var(--text);
+	line-height: 1.25;
+}
+.cm-hero__intro .cm-eyebrow strong { font-weight: 600; color: var(--accent); }
+.cm-hero__intro .cm-dot { flex: none; width: 10px; height: 10px; }
 .cm-hero__tagline {
 	margin-top: .8rem;
-	font-size: clamp(1rem, 1.4vw, 1.2rem);
-	color: var(--text);
+	max-width: 46ch;
+	font-size: clamp(.98rem, 1.25vw, 1.1rem);
+	color: var(--muted);
 }
 .cm-hero__aside { display: flex; flex-direction: column; align-items: flex-end; gap: 1rem; }
 
