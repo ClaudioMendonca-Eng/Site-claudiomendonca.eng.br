@@ -27,7 +27,7 @@
 
 		labelAbout: 'Sobre',
 		phraseresume: 'Do chão de fábrica a APIs seguras',
-		resume: 'Sou engenheiro de software com foco em back-end e cibersegurança. Construo APIs REST com Java e Spring Boot e serviços em Python, coloco IA para trabalhar em fluxos reais com agentes RAG e testo o que construo antes que outra pessoa teste: pentest, proteção com WAF e código seguro por padrão. Por ter trabalhado na indústria, da manutenção a sistemas supervisórios SCADA, escrevo software que precisa funcionar todo santo dia.',
+		resume: 'Sou engenheiro de software com foco em back-end e cibersegurança. Desenvolvo APIs REST com Java e Spring Boot e serviços em Python, integro inteligência artificial a processos de negócio com agentes RAG e aplico segurança em todo o ciclo de desenvolvimento, com testes de intrusão, proteção com WAF e código seguro por padrão. Minha experiência na indústria, da manutenção a sistemas supervisórios SCADA, me ensinou a entregar soluções confiáveis para operações que não podem parar.',
 		stat1: 'Projetos em destaque',
 		stat2: 'Flags capturadas em CTF',
 		stat3: 'Recomendações profissionais',
