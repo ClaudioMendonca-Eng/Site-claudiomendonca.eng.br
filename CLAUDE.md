@@ -13,7 +13,8 @@ Site pessoal / portfólio de Claudio Mendonça, publicado em **https://claudiome
 ## Estrutura
 
 ```
-index.html          Página única do site (versão 2, redesign de 2026)
+index.html          Página inicial (versão 2, redesign de 2026) com os 8 projetos em destaque
+projetos.html       Página com todos os projetos, detalhados e com filtro por área
 assets/css/main.css Estilos próprios (prefixo de classes `cm-`, variáveis em `:root`)
 assets/js/main.js   Tradução PT/EN + animações de scroll (GSAP, ScrollTrigger, Lenis)
 assets/images/      Imagens dos projetos, foto do banner e currículo em PDF (compartilhadas com a v1)
@@ -38,12 +39,13 @@ A v2 não usa mais Bootstrap, jQuery nem Slick (continuam só na `v1/`).
 ## Convenções importantes
 
 - **Tradução PT/EN**: todo texto visível traduzível tem `data-i18n="chave"`. O texto em **inglês fica no próprio HTML** (é lido ao carregar a página) e o texto em **português fica no objeto `PT`** em `assets/js/main.js`. Ao adicionar ou alterar texto, mexa nos dois. O idioma inicial vem do `localStorage` ou do idioma do navegador; o botão `#translator` alterna.
-- **Novos projetos**: copiar um `<article class="cm-card">` dentro de `.cm-projects__track`, imagem em `assets/images/projects-N.png` (retrato, ~375x500), chaves `pNNTitle`/`pNNDesc` no HTML (EN) e no objeto `PT`. Atualizar o número em `data-count` do primeiro contador, se quiser.
+- **Projetos**: a home (`index.html`) mostra só os **8 projetos em destaque** (os mais complexos), e o último card leva para `projetos.html`, que lista **todos**, do mais complexo ao mais simples. Para adicionar um projeto: copiar um `<article class="cm-pitem">` em `projetos.html` (definir `data-cat`: `backend`, `security`, `ai`, `front` ou `basics`, e o nível `levelAdv`/`levelInt`/`levelBeg`), imagem em `assets/images/projects-N.png` (retrato, ~375x500), chaves `pNNTitle`/`pNNDesc` no HTML (EN) e no objeto `PT`. Se ele entrar nos destaques, copiar também um `<article class="cm-card">` em `.cm-projects__track` na home (e tirar um, para manter 8). Atualizar o total em `data-count` do primeiro contador, no texto `allProjectsCta` e em `allIntro` (EN no HTML e PT no `main.js`). As contagens dos filtros são calculadas pelo JS.
+- **Título por página**: o `<body data-title-key="...">` diz qual chave do `PT` traduz o `<title>` (padrão `pageTitle`).
 - Classes CSS próprias usam o prefixo `cm-`.
 
 ## Animações (já aplicadas na v2)
 
-Tudo em `setupAnimations()` no `main.js`, dentro de `gsap.matchMedia()`:
+Tudo em `setupAnimations()` no `main.js`, dentro de `gsap.matchMedia()`. Na `projetos.html` (sem `.cm-hero`) roda só `setupProjectsPage()`: título palavra por palavra e cada projeto entrando com fade.
 
 - Hero: título gigante entra letra por linha e sai de cena (parallax) enquanto a foto fica; no desktop a seção fica presa (pin).
 - Sobre: seção presa enquanto o parágrafo acende palavra por palavra; números com contagem.

@@ -7,6 +7,7 @@
   4. Hero
   5. Sobre / resumo, números e faixa de tecnologias
   6. Projetos (vertical por padrão; horizontal com .cm-h-scroll no desktop)
+  6b. Página de todos os projetos (projetos.html)
   7. Depoimentos
   8. Contato
   9. Rodapé
@@ -555,6 +556,103 @@ html[lang="pt-BR"] .cm-lang [data-lang="pt"] { background: var(--accent); color:
 	overflow: hidden;
 }
 .cm-h-scroll .cm-card--more { height: min(78vh, 680px); }
+
+/* ---------- 6b. Página de todos os projetos (projetos.html) ---------- */
+.cm-allprojects { padding: calc(var(--header-h) + clamp(3rem, 8vw, 6rem)) 0 var(--section-y); }
+.cm-back {
+	display: inline-flex;
+	align-items: center;
+	gap: .4rem;
+	margin-bottom: 2.5rem;
+	font-size: .9rem;
+	color: var(--muted);
+	transition: color .3s;
+}
+.cm-back:hover { color: var(--accent); }
+.cm-allprojects .cm-label { display: flex; }
+.cm-allprojects__intro { max-width: 46ch; margin-top: 1.5rem; font-size: 1.1rem; color: var(--muted); }
+
+.cm-filter {
+	display: flex;
+	flex-wrap: wrap;
+	gap: .5rem;
+	margin: clamp(2rem, 5vw, 3rem) 0 clamp(2rem, 4vw, 2.5rem);
+}
+.cm-filter__btn {
+	display: inline-flex;
+	align-items: center;
+	gap: .5rem;
+	min-height: 44px;
+	padding: .5rem 1.1rem;
+	border: 1px solid var(--line);
+	border-radius: 999px;
+	background: var(--surface);
+	color: var(--muted);
+	font-size: .92rem;
+	cursor: pointer;
+	transition: color .3s, background-color .3s, border-color .3s;
+}
+.cm-filter__btn:hover { color: var(--text); border-color: rgba(198, 244, 50, .35); }
+.cm-filter__btn[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
+.cm-filter__count { font-style: normal; font-family: var(--font-mono); font-size: .75rem; opacity: .7; }
+
+.cm-plist {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: clamp(1rem, 2vw, 1.5rem);
+}
+.cm-pitem {
+	display: grid;
+	grid-template-columns: minmax(150px, 36%) 1fr;
+	border: 1px solid var(--line);
+	border-radius: var(--radius);
+	background: var(--surface);
+	overflow: hidden;
+	transition: border-color .4s;
+}
+.cm-pitem[hidden] { display: none; }
+.cm-pitem:hover { border-color: rgba(198, 244, 50, .35); }
+.cm-pitem__media { display: block; background: var(--surface-2); overflow: hidden; }
+.cm-pitem__media img { width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: transform .6s var(--ease); }
+.cm-pitem:hover .cm-pitem__media img { transform: scale(1.04); }
+.cm-pitem__body { display: flex; flex-direction: column; gap: .85rem; padding: clamp(1.25rem, 2vw, 1.75rem); }
+.cm-pitem__meta { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; }
+.cm-chip {
+	padding: .2rem .6rem;
+	border-radius: 999px;
+	background: rgba(198, 244, 50, .1);
+	color: var(--accent);
+	font-family: var(--font-mono);
+	font-size: .75rem;
+}
+.cm-pitem__level { font-family: var(--font-mono); font-size: .75rem; color: var(--muted); }
+.cm-pitem__level::before { content: '●'; margin-right: .35rem; font-size: .6rem; vertical-align: .1em; }
+.cm-pitem__level[data-level="levelAdv"]::before { color: var(--accent); }
+.cm-pitem__level[data-level="levelInt"]::before { color: #f5c542; }
+.cm-pitem__level[data-level="levelBeg"]::before { color: #6ec1ff; }
+.cm-pitem h2 {
+	font-family: var(--font-display);
+	font-weight: 600;
+	font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+	line-height: 1.2;
+	letter-spacing: -0.02em;
+}
+.cm-pitem p { color: var(--muted); font-size: .95rem; }
+.cm-pitem__stack { margin-top: auto; padding-top: .3rem; }
+.cm-pitem__label { display: block; margin-bottom: .45rem; font-family: var(--font-mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.cm-pitem__stack .cm-tags { margin: 0; padding: 0; }
+.cm-pitem__stack .cm-tags li { font-size: .78rem; color: var(--text); }
+.cm-pitem .cm-card__link { padding-block: .6rem; }
+.cm-allprojects__more { margin-top: 3rem; text-align: center; }
+.cm-allprojects__more .cm-card__link { margin-inline: auto; }
+
+@media (max-width: 1100px) {
+	.cm-plist { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+	.cm-pitem { grid-template-columns: 1fr; }
+	.cm-pitem__media { aspect-ratio: 4 / 3; }
+}
 
 /* ---------- 7. Depoimentos ---------- */
 .cm-testimonials { padding-block: var(--section-y); }
