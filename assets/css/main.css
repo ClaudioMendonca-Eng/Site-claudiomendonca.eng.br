@@ -155,19 +155,6 @@ button { font: inherit; color: inherit; }
 	50% { box-shadow: 0 0 0 8px rgba(198, 244, 50, 0); }
 }
 
-.cm-btn {
-	display: inline-flex;
-	align-items: center;
-	gap: .6rem;
-	padding: .9rem 1.4rem;
-	border-radius: 999px;
-	background: var(--accent);
-	color: var(--accent-ink);
-	font-weight: 600;
-	transition: transform .4s var(--ease), box-shadow .4s var(--ease);
-}
-.cm-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px -10px rgba(198, 244, 50, .6); }
-
 /* palavras divididas pelo JS (revelação palavra por palavra) */
 .cm-word { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .08em; margin-bottom: -.08em; }
 .cm-word-inner { display: inline-block; will-change: transform; }
@@ -382,7 +369,7 @@ html[lang="pt-BR"] .cm-lang [data-lang="pt"] { background: var(--accent); color:
 	gap: clamp(2rem, 6vw, 6rem);
 	align-items: start;
 }
-.cm-about__head .cm-title { margin-bottom: 2rem; }
+.cm-about__head .cm-title { margin-bottom: 0; }
 .cm-about__text {
 	font-family: var(--font-display);
 	font-weight: 500;
