@@ -558,7 +558,7 @@ html[lang="pt-BR"] .cm-lang [data-lang="pt"] { background: var(--accent); color:
 .cm-h-scroll .cm-card--more { height: min(78vh, 680px); }
 
 /* ---------- 6b. Página de todos os projetos (projetos.html) ---------- */
-.cm-allprojects { padding: calc(var(--header-h) + clamp(3rem, 8vw, 6rem)) 0 var(--section-y); }
+.cm-allprojects { position: relative; padding: calc(var(--header-h) + clamp(3rem, 8vw, 6rem)) 0 var(--section-y); }
 .cm-back {
 	display: inline-flex;
 	align-items: center;

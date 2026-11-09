@@ -45,7 +45,7 @@ A v2 não usa mais Bootstrap, jQuery nem Slick (continuam só na `v1/`).
 
 ## Animações (já aplicadas na v2)
 
-Tudo em `setupAnimations()` no `main.js`, dentro de `gsap.matchMedia()`. Na `projetos.html` (sem `.cm-hero`) roda só `setupProjectsPage()`: título palavra por palavra e cada projeto entrando com fade.
+Tudo em `setupAnimations()` no `main.js`, dentro de `gsap.matchMedia()`. Na `projetos.html` (sem `.cm-hero`) roda só `setupProjectsPage()`: título palavra por palavra e, no desktop, os cursores voam até o título e os filtros ao carregar e cada projeto é arrastado até o lugar por um cursor conforme a rolagem (`assemble()` com início em `top 95%`), com mais dois cursores ajustando imagem e título. No celular, cada projeto entra com fade.
 
 - Hero: título gigante entra letra por linha e sai de cena (parallax) enquanto a foto fica; no desktop a seção fica presa (pin).
 - Sobre: seção presa enquanto o parágrafo acende palavra por palavra; números com contagem.

@@ -375,7 +375,8 @@
 	}
 
 	// Cada cursor "pega" um elemento solto, arrasta até o lugar certo e solta (montando a seção)
-	function assemble(ctx, targets, container, triggerEl) {
+	// start (opcional): ponto da rolagem que dispara a montagem (padrão 'top 80%')
+	function assemble(ctx, targets, container, triggerEl, start) {
 		if (!cursorsOn) return;
 		var els = gsap.utils.toArray(targets);
 		var offsets = els.map(function () { return { x: rand(-160, 160), y: rand(70, 150) }; });
@@ -384,7 +385,7 @@
 		});
 		ScrollTrigger.create({
 			trigger: triggerEl || els[0],
-			start: 'top 80%',
+			start: start || 'top 80%',
 			once: true,
 			onEnter: function () {
 				ctx.add(function () {
@@ -590,21 +591,51 @@
 		});
 	}
 
-	// Página de projetos: título palavra por palavra e cada projeto entra com fade ao aparecer
+	// Página de projetos: título palavra por palavra e, no desktop, os cursores "montam" a página:
+	// voam até o título e os filtros ao carregar e arrastam cada projeto até o lugar conforme a rolagem
 	function setupProjectsPage() {
-		mm.add('all', function () {
+		mm.add({
+			desktop: desktopQuery,
+			mobile: '(max-width: 991px), (max-height: 619px)'
+		}, function (ctx) {
+			var desktop = ctx.conditions.desktop;
+			var page = document.querySelector('.cm-allprojects');
+
 			document.querySelectorAll('[data-split]').forEach(function (el) {
 				gsap.from(splitWords(el), { yPercent: 110, duration: 1, ease: 'expo.out', stagger: 0.05, delay: 0.1 });
 			});
 			gsap.from(['.cm-back', '.cm-allprojects .cm-label', '.cm-allprojects__intro', '.cm-filter'], {
 				y: 20, opacity: 0, duration: 0.9, ease: 'expo.out', stagger: 0.08
 			});
-			gsap.utils.toArray('.cm-pitem').forEach(function (item) {
-				gsap.from(item, {
-					y: 50, opacity: 0, duration: 0.9, ease: 'expo.out',
-					scrollTrigger: { trigger: item, start: 'top 90%', once: true }
+
+			if (desktop && cursorsOn) {
+				swarm(['.cm-allprojects .cm-title', '.cm-filter'], page, 7, 0.2);
+				gsap.utils.toArray('.cm-pitem').forEach(function (item) {
+					// um cursor pega o projeto e arrasta até o lugar...
+					assemble(ctx, item, page, item, 'top 95%');
+					// ...e outros dois chegam para "ajustar" a imagem e o título
+					ScrollTrigger.create({
+						trigger: item, start: 'top 95%', once: true,
+						onEnter: function () {
+							// espera o projeto chegar ao lugar antes de medir a posição dos alvos
+							ctx.add(function () {
+								gsap.delayedCall(1.9, function () {
+									if (!item.hidden) swarm([item.querySelector('.cm-pitem__media'), item.querySelector('h2')], page, 2);
+								});
+							});
+						}
+					});
 				});
-			});
+			} else {
+				gsap.utils.toArray('.cm-pitem').forEach(function (item) {
+					gsap.from(item, {
+						y: 50, opacity: 0, duration: 0.9, ease: 'expo.out',
+						scrollTrigger: { trigger: item, start: 'top 90%', once: true }
+					});
+				});
+			}
+
+			return function () { removeCursorLayers(); };
 		});
 	}
 
