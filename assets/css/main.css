@@ -243,8 +243,51 @@ button { font: inherit; color: inherit; }
 html[lang="en"] .cm-lang [data-lang="en"],
 html[lang="pt-BR"] .cm-lang [data-lang="pt"] { background: var(--accent); color: var(--accent-ink); }
 
+/* botão de menu (só no celular) */
+.cm-menu-btn {
+	display: none;
+	place-items: center;
+	width: 44px;
+	height: 44px;
+	padding: 0;
+	border: 1px solid var(--line);
+	border-radius: 999px;
+	background: rgba(22, 22, 27, .6);
+	font-size: 1.25rem;
+	cursor: pointer;
+	transition: background-color .3s, border-color .3s;
+}
+.cm-menu-btn:hover { border-color: rgba(198, 244, 50, .35); }
+.cm-header.is-open .cm-menu-btn { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+
 @media (max-width: 760px) {
-	.cm-nav { display: none; }
+	.cm-lang { margin-left: auto; }
+	.cm-menu-btn { display: grid; }
+	/* o menu vira um painel que desce do topo quando o botão é tocado */
+	.cm-nav {
+		position: absolute;
+		top: calc(100% + .5rem);
+		left: var(--gutter);
+		right: var(--gutter);
+		flex-direction: column;
+		gap: .25rem;
+		padding: .5rem;
+		border-radius: var(--radius);
+		background: rgba(17, 17, 20, .97);
+		box-shadow: 0 24px 60px rgba(0, 0, 0, .6);
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(-8px);
+		transition: opacity .3s var(--ease), transform .3s var(--ease), visibility 0s .3s;
+	}
+	.cm-header.is-open .cm-nav {
+		opacity: 1;
+		visibility: visible;
+		transform: none;
+		transition: opacity .3s var(--ease), transform .3s var(--ease);
+	}
+	.cm-nav a { padding: .9rem 1.1rem; border-radius: 14px; font-family: var(--font-display); font-size: 1.25rem; color: var(--text); }
+	.cm-header.is-open { background: rgba(10, 10, 11, .92); border-bottom-color: var(--line); }
 }
 
 /* ---------- 4. Hero ---------- */

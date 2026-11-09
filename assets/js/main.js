@@ -194,11 +194,31 @@
 		var max = document.documentElement.scrollHeight - window.innerHeight;
 		progress.style.transform = 'scaleX(' + (max > 0 ? y / max : 0) + ')';
 		header.classList.toggle('is-scrolled', y > 40);
-		header.classList.toggle('is-hidden', y > lastY && y > 400);
+		header.classList.toggle('is-hidden', y > lastY && y > 400 && !header.classList.contains('is-open'));
 		lastY = y;
 	}
 	window.addEventListener('scroll', onScroll, { passive: true });
 	onScroll();
+
+	// Menu do celular: o botão abre/fecha o painel; fecha ao escolher um link, com Esc ou tocando fora
+	var menuBtn = document.querySelector('.cm-menu-btn');
+	function setMenu(open) {
+		header.classList.toggle('is-open', open);
+		menuBtn.setAttribute('aria-expanded', String(open));
+		menuBtn.querySelector('i').className = open ? 'ri-close-line' : 'ri-menu-line';
+	}
+	if (menuBtn) {
+		menuBtn.addEventListener('click', function () { setMenu(!header.classList.contains('is-open')); });
+		document.querySelectorAll('.cm-nav a').forEach(function (a) {
+			a.addEventListener('click', function () { setMenu(false); });
+		});
+		document.addEventListener('keydown', function (e) {
+			if (e.key === 'Escape' && header.classList.contains('is-open')) { setMenu(false); menuBtn.focus(); }
+		});
+		document.addEventListener('click', function (e) {
+			if (header.classList.contains('is-open') && !header.contains(e.target)) setMenu(false);
+		});
+	}
 
 	var navLinks = document.querySelectorAll('.cm-nav a');
 	if ('IntersectionObserver' in window) {

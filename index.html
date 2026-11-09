@@ -39,7 +39,7 @@
     <!-- ===================== HEADER ===================== -->
     <header class="cm-header">
       <a href="#top" class="cm-logo" aria-label="Claudio Mendonça">cl4ud10-m3nd0c4<span>.dev</span></a>
-      <nav class="cm-nav" aria-label="Menu">
+      <nav class="cm-nav" id="cm-nav" aria-label="Menu">
         <a href="#about" data-i18n="navAbout">About</a>
         <a href="#projects" data-i18n="navProjects">Projects</a>
         <a href="#testimonials" data-i18n="navTestimonials">Testimonials</a>
@@ -47,6 +47,9 @@
       </nav>
       <button type="button" class="cm-lang" id="translator" aria-label="Mudar idioma / Change language">
         <span data-lang="pt">PT</span><span data-lang="en">EN</span>
+      </button>
+      <button type="button" class="cm-menu-btn" aria-controls="cm-nav" aria-expanded="false" aria-label="Abrir menu / Open menu">
+        <i class="ri-menu-line" aria-hidden="true"></i>
       </button>
     </header>
 
