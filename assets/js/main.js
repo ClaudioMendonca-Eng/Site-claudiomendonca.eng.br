@@ -27,7 +27,6 @@
 
 		labelAbout: 'Sobre',
 		phraseresume: 'Dedicado a melhorar suas operações comerciais',
-		download: 'Baixar currículo',
 		resume: 'Transformando o seu brainstorming em realidade, meu compromisso é dedicar expertise e dedicação à criação de softwares de qualidade superior, potencializando o desempenho e a eficiência do seu negócio. Especializado em atender às necessidades de pequenas e grandes empresas, estou aqui para concretizar ideias inovadoras e elevar o padrão tecnológico da sua empresa.',
 		stat1: 'Projetos em destaque',
 		stat2: 'Flags capturadas em CTF',
@@ -449,7 +448,7 @@
 				// cursores montam o "Sobre" e arrastam os números para o lugar
 				ScrollTrigger.create({
 					trigger: '.cm-about__grid', start: 'top 70%', once: true,
-					onEnter: function () { ctx.add(function () { swarm(['.cm-about__head .cm-title', '.cm-about__head .cm-btn'], document.querySelector('.cm-about__grid'), 4); }); }
+					onEnter: function () { ctx.add(function () { swarm(['.cm-about__head .cm-title'], document.querySelector('.cm-about__grid'), 4); }); }
 				});
 				assemble(ctx, '.cm-stats li', document.querySelector('.cm-about'), '.cm-stats');
 			} else {
