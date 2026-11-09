@@ -37,6 +37,25 @@
 		projectsHint: 'Continue rolando para explorar',
 		viewProject: 'Ver projeto',
 		moreProjects: 'Ver todos os projetos no GitHub',
+		allProjectsCta: 'Ver os 34 projetos, com detalhes',
+
+		// Página de projetos (projetos.html)
+		pageTitleProjects: 'Projetos · Claudio Mendonça',
+		backHome: 'Voltar para o início',
+		allTitle: 'Todos os projetos',
+		allIntro: '34 projetos, do mais complexo ao mais simples. Filtre por área para achar o que mais te interessa.',
+		filterAll: 'Todos',
+		catBackend: 'Back-end &amp; Sistemas',
+		catSecurity: 'Segurança',
+		catAI: 'IA &amp; Automação',
+		catFront: 'Front-end',
+		catBasics: 'Fundamentos',
+		levelAdv: 'Avançado',
+		levelInt: 'Intermediário',
+		levelBeg: 'Iniciante',
+		stackLabel: 'Tecnologias',
+		viewRepo: 'Ver no GitHub',
+		viewSite: 'Abrir projeto',
 		p08Title: 'PROTEGER-NR1 EPT',
 		p08Desc: 'Sistema web para identificar, registrar e prevenir riscos psicossociais (NR-1) em instituições de Educação Profissional e Tecnológica, com os instrumentos Karasek e COPSOQ. Questionários anônimos, resultados com k-anonimato e mapa de risco, planos de ação e recursos de IA opcionais.',
 		p09Title: 'Agente de IA com RAG - BimBam Buy',
@@ -126,7 +145,10 @@
 
 	var root = document.documentElement;
 	var i18nEls = document.querySelectorAll('[data-i18n]');
-	var EN = { pageTitle: document.title };
+	// cada página informa a chave do título em <body data-title-key> (padrão: pageTitle)
+	var titleKey = document.body.dataset.titleKey || 'pageTitle';
+	var EN = {};
+	EN[titleKey] = document.title;
 	i18nEls.forEach(function (el) { EN[el.dataset.i18n] = el.innerHTML.trim(); });
 	var DICT = { en: EN, pt: PT };
 
@@ -147,7 +169,7 @@
 			}
 			el.innerHTML = value;
 		});
-		document.title = DICT[next].pageTitle;
+		document.title = DICT[next][titleKey];
 		try { localStorage.setItem('cm-lang', next); } catch (e) { /* modo privado */ }
 	}
 
@@ -193,6 +215,26 @@
 			if (s) io.observe(s);
 		});
 	}
+
+	/* ------------------------------------------------------------------
+	   2b. Página de projetos: filtro por área (funciona mesmo sem GSAP)
+	------------------------------------------------------------------ */
+	var isHome = !!document.querySelector('.cm-hero');
+	var filterBtns = document.querySelectorAll('.cm-filter__btn');
+	var pItems = document.querySelectorAll('.cm-pitem');
+
+	filterBtns.forEach(function (btn) {
+		var f = btn.dataset.filter;
+		var count = 0;
+		pItems.forEach(function (item) { if (f === 'all' || item.dataset.cat === f) count++; });
+		btn.querySelector('.cm-filter__count').textContent = count;
+
+		btn.addEventListener('click', function () {
+			filterBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b === btn)); });
+			pItems.forEach(function (item) { item.hidden = !(f === 'all' || item.dataset.cat === f); });
+			if (window.ScrollTrigger) window.ScrollTrigger.refresh();
+		});
+	});
 
 	/* ------------------------------------------------------------------
 	   3. Animações
@@ -385,6 +427,11 @@
 	function setupAnimations() {
 		mm = gsap.matchMedia();
 
+		if (!isHome) {
+			setupProjectsPage();
+			return;
+		}
+
 		mm.add({
 			desktop: desktopQuery,
 			mobile: '(max-width: 991px), (max-height: 619px)'
@@ -543,6 +590,24 @@
 		});
 	}
 
+	// Página de projetos: título palavra por palavra e cada projeto entra com fade ao aparecer
+	function setupProjectsPage() {
+		mm.add('all', function () {
+			document.querySelectorAll('[data-split]').forEach(function (el) {
+				gsap.from(splitWords(el), { yPercent: 110, duration: 1, ease: 'expo.out', stagger: 0.05, delay: 0.1 });
+			});
+			gsap.from(['.cm-back', '.cm-allprojects .cm-label', '.cm-allprojects__intro', '.cm-filter'], {
+				y: 20, opacity: 0, duration: 0.9, ease: 'expo.out', stagger: 0.08
+			});
+			gsap.utils.toArray('.cm-pitem').forEach(function (item) {
+				gsap.from(item, {
+					y: 50, opacity: 0, duration: 0.9, ease: 'expo.out',
+					scrollTrigger: { trigger: item, start: 'top 90%', once: true }
+				});
+			});
+		});
+	}
+
 	// Ao trocar o idioma, o texto muda de tamanho: refaz as divisões em palavras e os gatilhos
 	function rebuildAnimations() {
 		if (!mm) return;
@@ -552,7 +617,11 @@
 		ScrollTrigger.refresh();
 	}
 
-	playIntro();
+	if (isHome) {
+		playIntro();
+	} else {
+		root.classList.remove('js-anim');
+	}
 	setupAnimations();
 
 	if (document.fonts && document.fonts.ready) {
