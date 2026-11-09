@@ -21,13 +21,13 @@
 		navProjects: 'Projetos',
 		navTestimonials: 'Depoimentos',
 		navContact: 'Contato',
-		role: 'Engenheiro de Software · Back-end &amp; Cibersegurança',
-		banner: 'Sou desenvolvedor de software, transformando seu brainstorming em realidade digital.',
+		role: 'Engenheiro de Software · <strong>Back-end &amp; Cibersegurança</strong>',
+		banner: 'Construo APIs e sistemas back-end com Java, Spring e Python, com segurança pensada desde o primeiro dia.',
 		scroll: 'Role',
 
 		labelAbout: 'Sobre',
-		phraseresume: 'Dedicado a melhorar suas operações comerciais',
-		resume: 'Transformando o seu brainstorming em realidade, meu compromisso é dedicar expertise e dedicação à criação de softwares de qualidade superior, potencializando o desempenho e a eficiência do seu negócio. Especializado em atender às necessidades de pequenas e grandes empresas, estou aqui para concretizar ideias inovadoras e elevar o padrão tecnológico da sua empresa.',
+		phraseresume: 'Do chão de fábrica a APIs seguras',
+		resume: 'Sou engenheiro de software com foco em back-end e cibersegurança. Desenvolvo APIs REST com Java e Spring Boot e serviços em Python, integro inteligência artificial a processos de negócio com agentes RAG e aplico segurança em todo o ciclo de desenvolvimento, com testes de intrusão, proteção com WAF e código seguro por padrão. Minha experiência na indústria, da manutenção a sistemas supervisórios SCADA, me ensinou a entregar soluções confiáveis para operações que não podem parar.',
 		stat1: 'Projetos em destaque',
 		stat2: 'Flags capturadas em CTF',
 		stat3: 'Recomendações profissionais',
@@ -136,7 +136,7 @@
 
 		labelContact: 'Contato',
 		contactTitle: 'Vamos construir algo juntos.',
-		vacant: 'Estou disponível para prestação de serviços.',
+		vacant: 'Aberto a projetos de back-end, segurança e IA, como contratado ou freelancer.',
 		rights: 'Todos os direitos reservados.',
 		createdBy: 'Criado por Claudio Mendonça.',
 		oldVersion: 'Versão anterior',
@@ -194,11 +194,31 @@
 		var max = document.documentElement.scrollHeight - window.innerHeight;
 		progress.style.transform = 'scaleX(' + (max > 0 ? y / max : 0) + ')';
 		header.classList.toggle('is-scrolled', y > 40);
-		header.classList.toggle('is-hidden', y > lastY && y > 400);
+		header.classList.toggle('is-hidden', y > lastY && y > 400 && !header.classList.contains('is-open'));
 		lastY = y;
 	}
 	window.addEventListener('scroll', onScroll, { passive: true });
 	onScroll();
+
+	// Menu do celular: o botão abre/fecha o painel; fecha ao escolher um link, com Esc ou tocando fora
+	var menuBtn = document.querySelector('.cm-menu-btn');
+	function setMenu(open) {
+		header.classList.toggle('is-open', open);
+		menuBtn.setAttribute('aria-expanded', String(open));
+		menuBtn.querySelector('i').className = open ? 'ri-close-line' : 'ri-menu-line';
+	}
+	if (menuBtn) {
+		menuBtn.addEventListener('click', function () { setMenu(!header.classList.contains('is-open')); });
+		document.querySelectorAll('.cm-nav a').forEach(function (a) {
+			a.addEventListener('click', function () { setMenu(false); });
+		});
+		document.addEventListener('keydown', function (e) {
+			if (e.key === 'Escape' && header.classList.contains('is-open')) { setMenu(false); menuBtn.focus(); }
+		});
+		document.addEventListener('click', function (e) {
+			if (header.classList.contains('is-open') && !header.contains(e.target)) setMenu(false);
+		});
+	}
 
 	var navLinks = document.querySelectorAll('.cm-nav a');
 	if ('IntersectionObserver' in window) {
@@ -375,7 +395,8 @@
 	}
 
 	// Cada cursor "pega" um elemento solto, arrasta até o lugar certo e solta (montando a seção)
-	function assemble(ctx, targets, container, triggerEl) {
+	// start (opcional): ponto da rolagem que dispara a montagem (padrão 'top 80%')
+	function assemble(ctx, targets, container, triggerEl, start) {
 		if (!cursorsOn) return;
 		var els = gsap.utils.toArray(targets);
 		var offsets = els.map(function () { return { x: rand(-160, 160), y: rand(70, 150) }; });
@@ -384,7 +405,7 @@
 		});
 		ScrollTrigger.create({
 			trigger: triggerEl || els[0],
-			start: 'top 80%',
+			start: start || 'top 80%',
 			once: true,
 			onEnter: function () {
 				ctx.add(function () {
@@ -590,21 +611,51 @@
 		});
 	}
 
-	// Página de projetos: título palavra por palavra e cada projeto entra com fade ao aparecer
+	// Página de projetos: título palavra por palavra e, no desktop, os cursores "montam" a página:
+	// voam até o título e os filtros ao carregar e arrastam cada projeto até o lugar conforme a rolagem
 	function setupProjectsPage() {
-		mm.add('all', function () {
+		mm.add({
+			desktop: desktopQuery,
+			mobile: '(max-width: 991px), (max-height: 619px)'
+		}, function (ctx) {
+			var desktop = ctx.conditions.desktop;
+			var page = document.querySelector('.cm-allprojects');
+
 			document.querySelectorAll('[data-split]').forEach(function (el) {
 				gsap.from(splitWords(el), { yPercent: 110, duration: 1, ease: 'expo.out', stagger: 0.05, delay: 0.1 });
 			});
 			gsap.from(['.cm-back', '.cm-allprojects .cm-label', '.cm-allprojects__intro', '.cm-filter'], {
 				y: 20, opacity: 0, duration: 0.9, ease: 'expo.out', stagger: 0.08
 			});
-			gsap.utils.toArray('.cm-pitem').forEach(function (item) {
-				gsap.from(item, {
-					y: 50, opacity: 0, duration: 0.9, ease: 'expo.out',
-					scrollTrigger: { trigger: item, start: 'top 90%', once: true }
+
+			if (desktop && cursorsOn) {
+				swarm(['.cm-allprojects .cm-title', '.cm-filter'], page, 7, 0.2);
+				gsap.utils.toArray('.cm-pitem').forEach(function (item) {
+					// um cursor pega o projeto e arrasta até o lugar...
+					assemble(ctx, item, page, item, 'top 95%');
+					// ...e outros dois chegam para "ajustar" a imagem e o título
+					ScrollTrigger.create({
+						trigger: item, start: 'top 95%', once: true,
+						onEnter: function () {
+							// espera o projeto chegar ao lugar antes de medir a posição dos alvos
+							ctx.add(function () {
+								gsap.delayedCall(1.9, function () {
+									if (!item.hidden) swarm([item.querySelector('.cm-pitem__media'), item.querySelector('h2')], page, 2);
+								});
+							});
+						}
+					});
 				});
-			});
+			} else {
+				gsap.utils.toArray('.cm-pitem').forEach(function (item) {
+					gsap.from(item, {
+						y: 50, opacity: 0, duration: 0.9, ease: 'expo.out',
+						scrollTrigger: { trigger: item, start: 'top 90%', once: true }
+					});
+				});
+			}
+
+			return function () { removeCursorLayers(); };
 		});
 	}
 

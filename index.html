@@ -8,7 +8,7 @@
     <meta name="theme-color" content="#0a0a0b">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Claudio Mendonça · Software Engineer">
-    <meta property="og:description" content="Back-end & Cybersecurity. Turning your brainstorming into reality.">
+    <meta property="og:description" content="Software engineer, back-end & cybersecurity: APIs with Java, Spring and Python, AI agents and security testing.">
     <meta property="og:url" content="https://claudiomendonca.eng.br/">
     <meta property="og:image" content="https://claudiomendonca.eng.br/assets/images/banner-image.png">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0a0b'/%3E%3Ctext x='50%25' y='56%25' text-anchor='middle' dominant-baseline='middle' font-family='monospace' font-weight='700' font-size='30' fill='%23c6f432'%3Ecm%3C/text%3E%3C/svg%3E">
@@ -39,7 +39,7 @@
     <!-- ===================== HEADER ===================== -->
     <header class="cm-header">
       <a href="#top" class="cm-logo" aria-label="Claudio Mendonça">cl4ud10-m3nd0c4<span>.dev</span></a>
-      <nav class="cm-nav" aria-label="Menu">
+      <nav class="cm-nav" id="cm-nav" aria-label="Menu">
         <a href="#about" data-i18n="navAbout">About</a>
         <a href="#projects" data-i18n="navProjects">Projects</a>
         <a href="#testimonials" data-i18n="navTestimonials">Testimonials</a>
@@ -47,6 +47,9 @@
       </nav>
       <button type="button" class="cm-lang" id="translator" aria-label="Mudar idioma / Change language">
         <span data-lang="pt">PT</span><span data-lang="en">EN</span>
+      </button>
+      <button type="button" class="cm-menu-btn" aria-controls="cm-nav" aria-expanded="false" aria-label="Abrir menu / Open menu">
+        <i class="ri-menu-line" aria-hidden="true"></i>
       </button>
     </header>
 
@@ -64,8 +67,8 @@
 
         <div class="cm-hero__bottom">
           <div class="cm-hero__intro">
-            <p class="cm-eyebrow"><span class="cm-dot" aria-hidden="true"></span><span data-i18n="role">Software Engineer · Back-end &amp; Cybersecurity</span></p>
-            <p class="cm-hero__tagline" data-i18n="banner">I’m a software developer, turning your brainstorming into reality.</p>
+            <p class="cm-eyebrow"><span class="cm-dot" aria-hidden="true"></span><span data-i18n="role">Software Engineer · <strong>Back-end &amp; Cybersecurity</strong></span></p>
+            <p class="cm-hero__tagline" data-i18n="banner">I build APIs and back-end systems with Java, Spring and Python, with security designed in from day one.</p>
           </div>
           <div class="cm-hero__aside">
             <ul class="cm-social">
@@ -85,9 +88,9 @@
         <div class="cm-container cm-about__grid">
           <div class="cm-about__head">
             <p class="cm-label"><span>01</span> <span data-i18n="labelAbout">About</span></p>
-            <h2 class="cm-title" data-i18n="phraseresume" data-split>Dedicated to improving your business operations</h2>
+            <h2 class="cm-title" data-i18n="phraseresume" data-split>From the factory floor to secure APIs</h2>
           </div>
-          <p class="cm-about__text" data-i18n="resume" data-scrub>Turning your brainstorming into reality, my commitment is to apply expertise to create superior-quality software, boosting the performance and efficiency of your business. Specialized in understanding the needs of both small and large enterprises, I am here to bring innovative ideas to improve the technological standards of your company.</p>
+          <p class="cm-about__text" data-i18n="resume" data-scrub>I’m a software engineer focused on back-end and cybersecurity. I develop REST APIs with Java and Spring Boot and services in Python, integrate artificial intelligence into business processes with RAG agents, and apply security across the entire development lifecycle, with penetration testing, WAF protection and secure-by-default code. My experience in industry, from maintenance to SCADA supervisory systems, taught me to deliver reliable solutions for operations that cannot stop.</p>
         </div>
 
         <div class="cm-container">
@@ -134,7 +137,7 @@
 
           <article class="cm-card" id="project07">
             <a class="cm-card__media" href="https://github.com/argos-scada" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
-              <img src="assets/images/projects-8.png" alt="" loading="lazy" width="367" height="500">
+              <img src="assets/images/projects-38.png" alt="" loading="lazy" width="375" height="500">
             </a>
             <div class="cm-card__body">
               <span class="cm-card__num">02</span>
@@ -160,7 +163,7 @@
 
           <article class="cm-card" id="project04">
             <a class="cm-card__media" href="https://github.com/ClaudioMendonca-Eng/VaiNaWeb-FormacaoEmCybersecurity-DesafioFinalCTF" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
-              <img src="assets/images/projects-7.png" alt="" loading="lazy" width="368" height="497">
+              <img src="assets/images/projects-39.png" alt="" loading="lazy" width="375" height="500">
             </a>
             <div class="cm-card__body">
               <span class="cm-card__num">04</span>
@@ -186,7 +189,7 @@
 
           <article class="cm-card" id="project03">
             <a class="cm-card__media" href="https://claudiomendonca-eng.github.io/santander-dev-week-26-03-24/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
-              <img src="assets/images/projects-4.png" alt="" loading="lazy" width="375" height="500">
+              <img src="assets/images/projects-40.png" alt="" loading="lazy" width="375" height="500">
             </a>
             <div class="cm-card__body">
               <span class="cm-card__num">06</span>
@@ -271,7 +274,7 @@
         <div class="cm-container">
           <p class="cm-label"><span>04</span> <span data-i18n="labelContact">Contact</span></p>
           <h2 class="cm-contact__title" data-i18n="contactTitle" data-split>Let’s build something together.</h2>
-          <p class="cm-contact__text" data-i18n="vacant">I am available to work.</p>
+          <p class="cm-contact__text" data-i18n="vacant">Open to back-end, security and AI projects, as a full-time role or freelance.</p>
           <a class="cm-contact__mail" href="mailto:contato@claudiomendonca.eng.br">contato@claudiomendonca.eng.br <i class="ri-arrow-right-up-line"></i></a>
           <ul class="cm-social cm-social--lg">
             <li><a href="https://github.com/ClaudioMendonca-Eng" target="_blank" rel="noopener" aria-label="GitHub"><i class="ri-github-line"></i></a></li>

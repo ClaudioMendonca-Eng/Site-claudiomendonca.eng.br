@@ -41,11 +41,12 @@ A v2 não usa mais Bootstrap, jQuery nem Slick (continuam só na `v1/`).
 - **Tradução PT/EN**: todo texto visível traduzível tem `data-i18n="chave"`. O texto em **inglês fica no próprio HTML** (é lido ao carregar a página) e o texto em **português fica no objeto `PT`** em `assets/js/main.js`. Ao adicionar ou alterar texto, mexa nos dois. O idioma inicial vem do `localStorage` ou do idioma do navegador; o botão `#translator` alterna.
 - **Projetos**: a home (`index.html`) mostra só os **8 projetos em destaque** (os mais complexos), e o último card leva para `projetos.html`, que lista **todos**, do mais complexo ao mais simples. Para adicionar um projeto: copiar um `<article class="cm-pitem">` em `projetos.html` (definir `data-cat`: `backend`, `security`, `ai`, `front` ou `basics`, e o nível `levelAdv`/`levelInt`/`levelBeg`), imagem em `assets/images/projects-N.png` (retrato, ~375x500), chaves `pNNTitle`/`pNNDesc` no HTML (EN) e no objeto `PT`. Se ele entrar nos destaques, copiar também um `<article class="cm-card">` em `.cm-projects__track` na home (e tirar um, para manter 8). Atualizar o total em `data-count` do primeiro contador, no texto `allProjectsCta` e em `allIntro` (EN no HTML e PT no `main.js`). As contagens dos filtros são calculadas pelo JS.
 - **Título por página**: o `<body data-title-key="...">` diz qual chave do `PT` traduz o `<title>` (padrão `pageTitle`).
+- **Menu no celular**: abaixo de 760px o `.cm-nav` vira um painel que abre pelo botão `.cm-menu-btn` (☰) do header; fecha ao tocar num link, com Esc ou tocando fora. O botão existe nas duas páginas.
 - Classes CSS próprias usam o prefixo `cm-`.
 
 ## Animações (já aplicadas na v2)
 
-Tudo em `setupAnimations()` no `main.js`, dentro de `gsap.matchMedia()`. Na `projetos.html` (sem `.cm-hero`) roda só `setupProjectsPage()`: título palavra por palavra e cada projeto entrando com fade.
+Tudo em `setupAnimations()` no `main.js`, dentro de `gsap.matchMedia()`. Na `projetos.html` (sem `.cm-hero`) roda só `setupProjectsPage()`: título palavra por palavra e, no desktop, os cursores voam até o título e os filtros ao carregar e cada projeto é arrastado até o lugar por um cursor conforme a rolagem (`assemble()` com início em `top 95%`), com mais dois cursores ajustando imagem e título. No celular, cada projeto entra com fade.
 
 - Hero: título gigante entra letra por linha e sai de cena (parallax) enquanto a foto fica; no desktop a seção fica presa (pin).
 - Sobre: seção presa enquanto o parágrafo acende palavra por palavra; números com contagem.
